@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>NVDA · REVERSE — обърнатата сметка (Р6)</title>
+<style>
+:root{
+  --bg:#f9f9f7; --surface:#ffffff; --ink:#111111; --ink2:#444444; --muted:#8a8a85;
+  --grid:#e2e1da; --line:#cfcec6; --accent:#2a6fc4; --codebg:#f0efec; --quote:#f3f2ee;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0d0d0d; --surface:#161615; --ink:#f2f2f0; --ink2:#c9c8c1; --muted:#8a8a85;
+  --grid:#2b2b28; --line:#3a3a36; --accent:#6ba6ea; --codebg:#232320; --quote:#1b1b19;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.62 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:20px 22px 72px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 20px;
+  padding-bottom:12px;border-bottom:1px solid var(--grid)}
+.nav a{text-decoration:none;border:1px solid var(--grid);background:var(--surface);
+  color:var(--ink2);border-radius:8px;padding:5px 12px;font-size:13px}
+.nav a:hover{border-color:var(--ink2);color:var(--ink)}
+.nav .sep{flex:1}
+.card h1{font-size:22px;line-height:1.28;margin:.3em 0 .55em}
+.card h2{font-size:18px;margin:1.7em 0 .5em;padding-bottom:.22em;
+  border-bottom:1px solid var(--grid)}
+.card h3{font-size:15px;margin:1.3em 0 .4em;color:var(--ink2)}
+.card p{margin:.65em 0}
+.card a{color:var(--accent)}
+.card strong{color:var(--ink)}
+.card code{background:var(--codebg);border-radius:4px;padding:.1em .35em;
+  font:12.5px/1.4 ui-monospace,"Cascadia Code",Consolas,monospace;word-break:break-all}
+.card blockquote{margin:.9em 0;padding:.5em 14px;background:var(--quote);
+  border-left:3px solid var(--line);color:var(--ink2);border-radius:0 6px 6px 0}
+.card blockquote p{margin:.35em 0}
+.card ul,.card ol{padding-left:1.35em;margin:.65em 0}
+.card li{margin:.28em 0}
+.card hr{border:0;border-top:1px solid var(--grid);margin:1.9em 0}
+.tablewrap{overflow-x:auto;margin:1.05em 0;border:1px solid var(--grid);
+  border-radius:7px;-webkit-overflow-scrolling:touch}
+.tablewrap table{border-collapse:collapse;width:100%;min-width:480px;font-size:13.5px}
+.tablewrap th,.tablewrap td{border-bottom:1px solid var(--grid);
+  border-right:1px solid var(--grid);padding:6px 11px;text-align:left;vertical-align:top}
+.tablewrap tr>*:last-child{border-right:0}
+.tablewrap tbody tr:last-child>*{border-bottom:0}
+.tablewrap th{background:var(--surface);font-weight:600;color:var(--ink2);
+  white-space:nowrap}
+.tablewrap tbody tr:nth-child(even) td{background:rgba(128,128,128,.045)}
+.foot{margin-top:34px;padding-top:12px;border-top:1px solid var(--grid);
+  color:var(--muted);font-size:11.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav">
+<a href="../index.html">&larr; Скрийн</a>
+<a href="NVDA-BASE.html">NVDA · BASE</a>
+<span class="sep"></span>
+<span style="color:var(--muted);font-size:12px">NVDA · REVERSE</span>
+</nav>
+<article class="card">
+<p>ВЪТРЕШЕН СЛОЙ — числа + provenance; не се разпространява (Р6).
+СТАТУТ: генериран от vorgan.reverse (М-V2). Присъдата и ръчните текстове чакат Ц./Fable.</p>
+<h1>NVDA (NVIDIA) — обърнатата сметка (REVERSE, vintage 2026-07)</h1>
+<blockquote>
+<p>Органът отговаря „какво ТРЯБВА да е вярно, за да струва днешната цена“ — НИКОГА точкова цена. Всички матрици са условни сметки (ако X и Y → аритметично следва Z), не прогнози (O4). Присъдата е ръчна: виж полето най-долу.</p>
+</blockquote>
+<h2>Входове</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Вход</th>
+<th>Стойност</th>
+<th>Provenance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Цена</td>
+<td>$194.83</td>
+<td>px_nvda_daily, бар 2026-07-02 (NVDA-BASE)</td>
+</tr>
+<tr>
+<td>Хоризонт</td>
+<td>2.585 г (2026-07-02 → 2029-01-31, край на FY2029)</td>
+<td>дни/365,25 от датите (не хардкод)</td>
+</tr>
+<tr>
+<td>Дивидент</td>
+<td>пренебрежим (yield 0.02%)</td>
+<td>NVDA-BASE div_ttm $0.973B / mktcap $4,714.886B → без изваждане</td>
+</tr>
+<tr>
+<td>EPS trailing (синт.)</td>
+<td>$6.60 (≈, не diluted WASO)</td>
+<td>NVDA-BASE §2</td>
+</tr>
+<tr>
+<td>P/E trailing</td>
+<td>29.5×</td>
+<td>NVDA-BASE §1</td>
+</tr>
+<tr>
+<td>EPS консенсус FY2029 (FY3)</td>
+<td>15.99 (12.54–19.84; n=22)</td>
+<td>Koyfin препис 2026-07 (М-V3)</td>
+</tr>
+<tr>
+<td>Собствена 6г P/E медиана (RAW)</td>
+<td>68.7× (p25 48.1 · p75 85.6)</td>
+<td>NVDA-BASE §3</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Форма 1 — имплицитно изходно кратно</h2>
+<p>Изисквана крайна стойност за 8%–10%/г: $194.83 × (1+r)^2.585 = $237.71 … $249.25.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>EPS сценарий (FY2029)</th>
+<th>Имплицитно изходно P/E за 8%–10%/г</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Консенсус 15.99</td>
+<td>14.9× – 15.6×</td>
+</tr>
+<tr>
+<td>Low 12.54</td>
+<td>19.0× – 19.9×</td>
+</tr>
+<tr>
+<td>High 19.84</td>
+<td>12.0× – 12.6×</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Форма 2 — матрица на имплицитния годишен резултат</h2>
+<p>Годишен ТОТАЛ = чист ценови CAGR (дивидент ~0), хоризонт 2.585 г:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>EPS FY2029 ↓ / изходно P/E →</th>
+<th>12×</th>
+<th>15×</th>
+<th>20×</th>
+<th>29.5× (днешното trailing)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Консенсус 15.99</td>
+<td>-0.6%</td>
+<td>+8.4%</td>
+<td>+21.1%</td>
+<td>+40.8%</td>
+</tr>
+<tr>
+<td>−22% haircut → 13.11 [S McKinsey]</td>
+<td>-8.0%</td>
+<td>+0.4%</td>
+<td>+12.2%</td>
+<td>+30.4%</td>
+</tr>
+<tr>
+<td>Low 12.54</td>
+<td>-9.5%</td>
+<td>-1.4%</td>
+<td>+10.3%</td>
+<td>+28.2%</td>
+</tr>
+<tr>
+<td>High 19.84</td>
+<td>+8.1%</td>
+<td>+17.8%</td>
+<td>+31.7%</td>
+<td>+53.1%</td>
+</tr>
+</tbody>
+</table></div>
+<h2>А2 — имплицитен FCF растеж (reverse-DCF, Rappaport/Mauboussin)</h2>
+<p>При дисконт r и EV = $4,710.119B, FCF_ttm котва = $119.076B, 10-годишен растеж g + Гордън терминал g_term = 2.5% (<strong>РАБОТНА КОНВЕНЦИЯ v1</strong>, етикет), реша g числово:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>r (изискуема)</th>
+<th>Имплицитен FCF растеж g (10г)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8%</td>
+<td>12.2%</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>17.0%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Sanity: g расте с r (по-скъп дисконт иска повече растеж, за да оправдае същото EV); имплицитният g е от порядъка на консенсусната Sales пътека (виж „какво трябва да е вярно“). Груб уред v1 — теминалът е конвенция, не оценка.</p>
+</blockquote>
+<h2>А3 — имплицитен CAP (residual income; груб уред v1)</h2>
+<p>MVA = mktcap − IC; IC = equity+debt−cash = $190.707B; MVA = $4,524.179B. RI = op_income×(1−21% работен данък, етикет „груб“) − r×IC. Имплицитен CAP = MVA/RI години:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>r</th>
+<th>RI</th>
+<th>Имплицитен CAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8%</td>
+<td>$112.949B</td>
+<td>40.1 г</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>$109.134B</td>
+<td>41.5 г</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Етикет „груб уред v1“: без данъчна корекция per година, без goodwill-корекция.</p>
+</blockquote>
+<h2>Какво трябва да е вярно (имплицитният залог)</h2>
+<ul>
+<li><strong>Консенсусната EPS YoY пътека</strong> (FY2027, FY2028, FY2029): +88.1% → +42.3% → +25.2%.</li>
+<li><strong>Консенсусната Sales YoY пътека</strong>: +81.8% → +41.2% → +22.9%.</li>
+<li><strong>Имплицитен EPS CAGR</strong> trailing (синт. 6.60) → FY2029 консенсус 15.99: <strong>40.9%/г</strong> за 2.58 г (уговорка TTM→FY; adjusted↔GAAP база — виж уговорките).</li>
+<li><strong>Имплицитен Sales CAGR</strong> FY0 (≈215.94B, импл. от FY1 YoY) → FY2029 (681.14B) за 3 фиск. г: <strong>46.7%/г</strong>.</li>
+<li><strong>[Interface B: Mauboussin кохорти — ръчен]</strong> — база-ставка ред (SPEC §3): попълва се ръчно от „The Base Rate Book“ (кохорти ръст × размер × хоризонт). Ако името е ИЗВЪН всяка кохорта, „няма прецедентна кохорта“ Е самата базова ставка.</li>
+</ul>
+<h2>Falsifier-и</h2>
+<p><em>[ПРЕНЕСЕНО ОТ ЧЕРНОВАТА — ръчна редакция]</em> — Ц./Fable решават финалните формулировки; кодът не ги изчислява.</p>
+<ol>
+<li><strong>Ниво:</strong> ~$135 ≈ 15× FY2027 консенсус (8,97 × 15 = 134,6) — под това ниво пазарът цени NVDA като зрял чипов бизнес БЕЗ растежната история (по конструкция от Форма 1). Това е „под X пазарът вече не вярва на growth историята“ за Е6А.</li>
+<li><strong>Ревизионен:</strong> две поредни месечни снимки (нашият консенсус архив) с рязан FY2/FY3 EPS консенсус → историята се пука ПРЕДИ цената; сигналът е в ревизиите, не в тапето.</li>
+<li><strong>Кратно-режим (следене):</strong> forward P/E върху FY1 днес = 194,83/8,97 = <strong>21,7×</strong>; пътят надолу към 15× е „нормализацията“, пътят нагоре е удължаване на историята.</li>
+</ol>
+<h2>Уговорки</h2>
+<p><em>[ПРЕНЕСЕНО ОТ ЧЕРНОВАТА — ръчна редакция]</em></p>
+<ul>
+<li>Изискуемата доходност 8–10% е работна лента, НЕ калибрирана котва (отворен въпрос на дъската: конвенция per сектор).</li>
+<li>EPS trailing е синтетичен (не diluted WASO); консенсусните EPS са diluted по дефиниция на vendor-а → леко несравними бази, посока: истинският trailing diluted EPS е малко по-нисък.</li>
+<li>FY3 консенсусът е тънък (n=22) и широк — матрицата затова носи low/high редове.</li>
+<li>Консенсус = snapshot 08.07 (NOT PIT); хоризонт-mismatch TTM↔FY отбелязан.</li>
+<li><em>(М-V3 етикет)</em> FY3 консенсусът е ТЪНЪК (22-26 аналитици срещу 50+ за FY1/FY2) и ШИРОК (EPS 12,54–19,84; FY3 low &lt; FY2 avg). Всичко тук = Koyfin/Capital IQ snapshot 08.07.2026, NOT PIT назад.</li>
+</ul>
+<h2>Присъда</h2>
+<p><strong>[ПРИСЪДА: Ц./Fable]</strong> — зоновият речник (SPEC §6) се попълва ръчно; кодът дава сметките, не присъдата. Двата края се пишат изрично: „предполага ли провал?“ и „предполага ли еуфория?“</p>
+<hr />
+<p><em>Генерирано детерминистично от vorgan.reverse (М-V2); BASE as-of 2026-07-02; консенсус vintage 2026-07 (NOT PIT назад). Р6 вътрешен.</em></p>
+</article>
+<div class="foot">Лице на оценъчния орган · нелистнат уред · vintage 2026-07 · съдържанието е дословно копие от органа.</div>
+</div>
+</body>
+</html>

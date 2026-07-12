@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>EIX · REVERSE — обърнатата сметка (Р6)</title>
+<style>
+:root{
+  --bg:#f9f9f7; --surface:#ffffff; --ink:#111111; --ink2:#444444; --muted:#8a8a85;
+  --grid:#e2e1da; --line:#cfcec6; --accent:#2a6fc4; --codebg:#f0efec; --quote:#f3f2ee;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0d0d0d; --surface:#161615; --ink:#f2f2f0; --ink2:#c9c8c1; --muted:#8a8a85;
+  --grid:#2b2b28; --line:#3a3a36; --accent:#6ba6ea; --codebg:#232320; --quote:#1b1b19;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.62 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:20px 22px 72px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 20px;
+  padding-bottom:12px;border-bottom:1px solid var(--grid)}
+.nav a{text-decoration:none;border:1px solid var(--grid);background:var(--surface);
+  color:var(--ink2);border-radius:8px;padding:5px 12px;font-size:13px}
+.nav a:hover{border-color:var(--ink2);color:var(--ink)}
+.nav .sep{flex:1}
+.card h1{font-size:22px;line-height:1.28;margin:.3em 0 .55em}
+.card h2{font-size:18px;margin:1.7em 0 .5em;padding-bottom:.22em;
+  border-bottom:1px solid var(--grid)}
+.card h3{font-size:15px;margin:1.3em 0 .4em;color:var(--ink2)}
+.card p{margin:.65em 0}
+.card a{color:var(--accent)}
+.card strong{color:var(--ink)}
+.card code{background:var(--codebg);border-radius:4px;padding:.1em .35em;
+  font:12.5px/1.4 ui-monospace,"Cascadia Code",Consolas,monospace;word-break:break-all}
+.card blockquote{margin:.9em 0;padding:.5em 14px;background:var(--quote);
+  border-left:3px solid var(--line);color:var(--ink2);border-radius:0 6px 6px 0}
+.card blockquote p{margin:.35em 0}
+.card ul,.card ol{padding-left:1.35em;margin:.65em 0}
+.card li{margin:.28em 0}
+.card hr{border:0;border-top:1px solid var(--grid);margin:1.9em 0}
+.tablewrap{overflow-x:auto;margin:1.05em 0;border:1px solid var(--grid);
+  border-radius:7px;-webkit-overflow-scrolling:touch}
+.tablewrap table{border-collapse:collapse;width:100%;min-width:480px;font-size:13.5px}
+.tablewrap th,.tablewrap td{border-bottom:1px solid var(--grid);
+  border-right:1px solid var(--grid);padding:6px 11px;text-align:left;vertical-align:top}
+.tablewrap tr>*:last-child{border-right:0}
+.tablewrap tbody tr:last-child>*{border-bottom:0}
+.tablewrap th{background:var(--surface);font-weight:600;color:var(--ink2);
+  white-space:nowrap}
+.tablewrap tbody tr:nth-child(even) td{background:rgba(128,128,128,.045)}
+.foot{margin-top:34px;padding-top:12px;border-top:1px solid var(--grid);
+  color:var(--muted);font-size:11.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav">
+<a href="../index.html">&larr; Скрийн</a>
+<a href="EIX-BASE.html">EIX · BASE</a>
+<span class="sep"></span>
+<span style="color:var(--muted);font-size:12px">EIX · REVERSE</span>
+</nav>
+<article class="card">
+<p>ВЪТРЕШЕН СЛОЙ — числа + provenance; не се разпространява (Р6).
+СТАТУТ: генериран от vorgan.reverse (М-V2). Присъдата и ръчните текстове чакат Ц./Fable.</p>
+<h1>EIX (Edison International) — обърнатата сметка (REVERSE, vintage 2026-07)</h1>
+<blockquote>
+<p>Органът отговаря „какво ТРЯБВА да е вярно, за да струва днешната цена“ — НИКОГА точкова цена. Всички матрици са условни сметки (ако X и Y → аритметично следва Z), не прогнози (O4). Присъдата е ръчна: виж полето най-долу.</p>
+</blockquote>
+<h2>Входове</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Вход</th>
+<th>Стойност</th>
+<th>Provenance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Цена</td>
+<td>$75.66</td>
+<td>px_eix_daily, бар 2026-07-02 (EIX-BASE)</td>
+</tr>
+<tr>
+<td>Хоризонт</td>
+<td>2.500 г (2026-07-02 → 2028-12-31, край на FY2028)</td>
+<td>дни/365,25 от датите (не хардкод)</td>
+</tr>
+<tr>
+<td>DPS (тек., плоско)</td>
+<td>$3.36 (div yield 4.4%)</td>
+<td>EIX-BASE div_ttm $1.293B / shares 384,793,941</td>
+</tr>
+<tr>
+<td>EPS trailing (синт.)</td>
+<td>$9.24 (≈, не diluted WASO)</td>
+<td>EIX-BASE §2</td>
+</tr>
+<tr>
+<td>P/E trailing</td>
+<td>8.2×</td>
+<td>EIX-BASE §1</td>
+</tr>
+<tr>
+<td>EPS консенсус FY2028 (FY3)</td>
+<td>6.92 (6.84–7.02; n=14)</td>
+<td>Koyfin препис 2026-07 (М-V3)</td>
+</tr>
+<tr>
+<td>Собствена 6г P/E медиана (RAW)</td>
+<td>33.9× (p25 18.1 · p75 46.2)</td>
+<td>EIX-BASE §3</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Форма 1 — имплицитно изходно кратно</h2>
+<p>Изисквана крайна стойност за 8%–10%/г: $75.66 × (1+r)^2.500 = $91.71 … $96.01.
+Събрани дивиденти за 2.50 г (плоско DPS×h, без реинвестиране): ≈ $8.40. → Изисквана изходна ЦЕНА: $83.31 – $87.61.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>EPS сценарий (FY2028)</th>
+<th>Имплицитно изходно P/E за 8%–10%/г</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Консенсус 6.92</td>
+<td>12.0× – 12.7×</td>
+</tr>
+<tr>
+<td>Low 6.84</td>
+<td>12.2× – 12.8×</td>
+</tr>
+<tr>
+<td>High 7.02</td>
+<td>11.9× – 12.5×</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Форма 2 — матрица на имплицитния годишен резултат</h2>
+<p>Годишен ТОТАЛ = ценови CAGR + плосък дивидент 4.4% (v1 приближение), хоризонт 2.500 г:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>EPS FY2028 ↓ / изходно P/E →</th>
+<th>9× (нов шок-режим)</th>
+<th>11×</th>
+<th>12.4× (днешното fwd)</th>
+<th>15× (⚠ [ДОГАДКА] пре-пожарна норма — хипотеза, не котва)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Консенсус 6.92</td>
+<td>-3.0%</td>
+<td>+4.7%</td>
+<td>+9.6%</td>
+<td>+17.9%</td>
+</tr>
+</tbody>
+</table></div>
+<p>EPS Low/High редове пропуснати: при ±1,3% диапазон (6,84–7,02) матрицата не мърда — рискът на EIX НЕ живее в консенсусния диапазон, а ИЗВЪН него (пожарна опашка; виж „какво трябва да е вярно“). 15× колоната е [ДОГАДКА, НЕПРОВЕРЕНО] хипотеза за пре-пожарна норма, не верифицирана секторна котва (нужна XLU-forward серия).</p>
+<h2>А2 — имплицитен FCF растеж (reverse-DCF, Rappaport/Mauboussin)</h2>
+<p><strong>ОТКАЗ (деклариран):</strong> структурно отрицателен FCF (capex&gt;CFO, rate-base) — обръщането на растеж е безсмислено; деклариран отказ (SPEC §4.А2). FCF_ttm = $-0.643B.</p>
+<h2>А3 — имплицитен CAP (residual income; груб уред v1)</h2>
+<p>MVA = mktcap − IC; IC = equity+debt−cash = $57.459B; MVA = $-28.345B. RI = op_income×(1−21% работен данък, етикет „груб“) − r×IC. Имплицитен CAP = MVA/RI години:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>r</th>
+<th>RI</th>
+<th>Имплицитен CAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8%</td>
+<td>$0.169B</td>
+<td>-167.4 г</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>$-0.980B</td>
+<td>28.9 г</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>⚠️ MVA&lt;0: пазарната стойност е ПОД инвестирания капитал → уредът не цени премия за свръхвъзвръщаемост (границите на груб RI v1 за regulated utility с rate-base, финансиран с дълг).
+⚠️ RI≤0 при поне един r: няма положителна остатъчна печалба над капиталовия разход → CAP не е смислен.</p>
+</blockquote>
+<h2>Какво трябва да е вярно (имплицитният залог)</h2>
+<ul>
+<li><strong>Консенсусната EPS YoY пътека</strong> (FY2026, FY2027, FY2028): -6.6% → +6.4% → +6.3%.</li>
+<li><strong>Консенсусната Sales YoY пътека</strong>: +0.0% → +3.4% → +3.4%.</li>
+<li><strong>Имплицитен EPS CAGR</strong> trailing (синт. 9.24) → FY2028 консенсус 6.92: <strong>-10.9%/г</strong> за 2.50 г (уговорка TTM→FY; adjusted↔GAAP база — виж уговорките).</li>
+<li><strong>Имплицитен Sales CAGR</strong> FY0 (≈19.31B, импл. от FY1 YoY) → FY2028 (20.65B) за 3 фиск. г: <strong>2.3%/г</strong>.</li>
+<li><strong>[Interface B: Mauboussin кохорти — ръчен]</strong> — база-ставка ред (SPEC §3): попълва се ръчно от „The Base Rate Book“ (кохорти ръст × размер × хоризонт). Ако името е ИЗВЪН всяка кохорта, „няма прецедентна кохорта“ Е самата базова ставка.</li>
+</ul>
+<h2>Falsifier-и</h2>
+<p><em>[ПРЕНЕСЕНО ОТ ЧЕРНОВАТА — ръчна редакция]</em> — Ц./Fable решават финалните формулировки; кодът не ги изчислява.</p>
+<ol>
+<li><strong>Ниво:</strong> ~$67 ≈ 11× FY2026 консенсус (6,12 × 11) — под него пазарът цени нов пасивен шок (пожар/регулаторен), не rate-base икономика.</li>
+<li><strong>Ревизионен:</strong> консенсусният диапазон да се РАЗШИРИ (сега ±1,3%) е по-ранният сигнал от посоката му — разширението значи „формулата вече не важи“.</li>
+<li><strong>Секторен (Е6б връзката):</strong> Utilities лидерството (rotation #1, 02.07) да се счупи → картонът губи попътния вятър, който го докара в топ-3 на моста.</li>
+</ol>
+<h2>Уговорки</h2>
+<p><em>[ПРЕНЕСЕНО ОТ ЧЕРНОВАТА — ръчна редакция]</em></p>
+<ul>
+<li>Дивидентът плоско, без реинвестиране (EIX-BASE div-компонент ≈ приближение от net payout 4,6%).</li>
+<li>EV зазорът с vendor дефиниции на дълга (Δ ~5–6%) отбелязан в BASE — не влияе на P/E сметката тук.</li>
+<li>15× колоната е етикетирана хипотеза (виж по-горе) — да се верифицира или маха при спецификацията.</li>
+<li><em>(М-V3 етикет)</em> Консенсус EPS = CORE/adjusted (~6): наш синт. GAAP TTM EPS 9,24 е НАДУТ от еднократни (пожарни recoveries/обрати) → истинската оценъчна база е core-ът. Trailing P/E 8,2× (GAAP) е подвеждащ; пазарът цени 12,4× core.</li>
+<li><em>(М-V3 етикет)</em> Имплицитен FY2025 core EPS: 6,12/0,9344 = 6,55 → FY2026 е ГОДИНА НА СПАД (−6,6%), после +6,4%/г възстановяване.</li>
+<li><em>(М-V3 етикет)</em> Консенсусът е забележително ТЕСЕН (FY2028: 6,84–7,02, ±1,3%) — регулирана икономика; n=12-17 стабилно и за FY3.</li>
+</ul>
+<h2>Присъда</h2>
+<p><strong>[ПРИСЪДА: Ц./Fable]</strong> — зоновият речник (SPEC §6) се попълва ръчно; кодът дава сметките, не присъдата. Двата края се пишат изрично: „предполага ли провал?“ и „предполага ли еуфория?“</p>
+<hr />
+<p><em>Генерирано детерминистично от vorgan.reverse (М-V2); BASE as-of 2026-07-02; консенсус vintage 2026-07 (NOT PIT назад). Р6 вътрешен.</em></p>
+</article>
+<div class="foot">Лице на оценъчния орган · нелистнат уред · vintage 2026-07 · съдържанието е дословно копие от органа.</div>
+</div>
+</body>
+</html>

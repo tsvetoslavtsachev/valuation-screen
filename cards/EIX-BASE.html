@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>EIX · BASE — оценъчна котва (Р6)</title>
+<style>
+:root{
+  --bg:#f9f9f7; --surface:#ffffff; --ink:#111111; --ink2:#444444; --muted:#8a8a85;
+  --grid:#e2e1da; --line:#cfcec6; --accent:#2a6fc4; --codebg:#f0efec; --quote:#f3f2ee;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0d0d0d; --surface:#161615; --ink:#f2f2f0; --ink2:#c9c8c1; --muted:#8a8a85;
+  --grid:#2b2b28; --line:#3a3a36; --accent:#6ba6ea; --codebg:#232320; --quote:#1b1b19;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.62 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:20px 22px 72px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 20px;
+  padding-bottom:12px;border-bottom:1px solid var(--grid)}
+.nav a{text-decoration:none;border:1px solid var(--grid);background:var(--surface);
+  color:var(--ink2);border-radius:8px;padding:5px 12px;font-size:13px}
+.nav a:hover{border-color:var(--ink2);color:var(--ink)}
+.nav .sep{flex:1}
+.card h1{font-size:22px;line-height:1.28;margin:.3em 0 .55em}
+.card h2{font-size:18px;margin:1.7em 0 .5em;padding-bottom:.22em;
+  border-bottom:1px solid var(--grid)}
+.card h3{font-size:15px;margin:1.3em 0 .4em;color:var(--ink2)}
+.card p{margin:.65em 0}
+.card a{color:var(--accent)}
+.card strong{color:var(--ink)}
+.card code{background:var(--codebg);border-radius:4px;padding:.1em .35em;
+  font:12.5px/1.4 ui-monospace,"Cascadia Code",Consolas,monospace;word-break:break-all}
+.card blockquote{margin:.9em 0;padding:.5em 14px;background:var(--quote);
+  border-left:3px solid var(--line);color:var(--ink2);border-radius:0 6px 6px 0}
+.card blockquote p{margin:.35em 0}
+.card ul,.card ol{padding-left:1.35em;margin:.65em 0}
+.card li{margin:.28em 0}
+.card hr{border:0;border-top:1px solid var(--grid);margin:1.9em 0}
+.tablewrap{overflow-x:auto;margin:1.05em 0;border:1px solid var(--grid);
+  border-radius:7px;-webkit-overflow-scrolling:touch}
+.tablewrap table{border-collapse:collapse;width:100%;min-width:480px;font-size:13.5px}
+.tablewrap th,.tablewrap td{border-bottom:1px solid var(--grid);
+  border-right:1px solid var(--grid);padding:6px 11px;text-align:left;vertical-align:top}
+.tablewrap tr>*:last-child{border-right:0}
+.tablewrap tbody tr:last-child>*{border-bottom:0}
+.tablewrap th{background:var(--surface);font-weight:600;color:var(--ink2);
+  white-space:nowrap}
+.tablewrap tbody tr:nth-child(even) td{background:rgba(128,128,128,.045)}
+.foot{margin-top:34px;padding-top:12px;border-top:1px solid var(--grid);
+  color:var(--muted);font-size:11.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav">
+<a href="../index.html">&larr; Скрийн</a>
+<a href="EIX-REVERSE.html">EIX · REVERSE</a>
+<span class="sep"></span>
+<span style="color:var(--muted);font-size:12px">EIX · BASE</span>
+</nav>
+<article class="card">
+<p>ВЪТРЕШЕН СЛОЙ — числа + provenance; не се разпространява (Р6).</p>
+<h1>EIX (Edison International) — оценъчна trailing котва (BASE)</h1>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Мета</th>
+<th>Стойност</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Дата на изчислението</td>
+<td>2026-07-08</td>
+</tr>
+<tr>
+<td>As-of на ценовия бар</td>
+<td>2026-07-02 (последен наличен бар в архива/pin)</td>
+</tr>
+<tr>
+<td>Ценова серия</td>
+<td>px_eix_daily (split_factor на тип-бара = 1)</td>
+</tr>
+<tr>
+<td>Портирано от</td>
+<td><code>C:/Users/tsach/AppData/Local/Temp/claude/C--Projects/67d453b0-30fd-4b39-8a29-e83ddaae4718/scratchpad/probe5/extract.py</code> → vorgan.base</td>
+</tr>
+<tr>
+<td>Източник цени</td>
+<td>price-archive px_eix · datacore.archive.read (close, split-adj) · vorgan.base</td>
+</tr>
+<tr>
+<td>Източник фундаментали</td>
+<td>EDGAR PIT panel (research/data/edgar_pit_panel.csv.gz) · pit.as_known_at · vorgan.base</td>
+</tr>
+<tr>
+<td>Сектор (ranked)</td>
+<td>Utilities</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Всички долни числа са PIT (filed&lt;=as-of, без lookahead). Cover-page shares са instant, не diluted WASO. Цената е split-adjusted total price basis (dividend-неадjust-ната <code>close</code>).</p>
+</blockquote>
+<h2>1. Текуща котва (as-of последния бар)</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Компонент</th>
+<th>Стойност</th>
+<th>Източник / as-of</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Цена (close, split-adj)</td>
+<td>$75.66</td>
+<td>price-archive px_eix · datacore.archive.read (close, split-adj) · vorgan.base; бар 2026-07-02</td>
+</tr>
+<tr>
+<td>shares_outstanding</td>
+<td>384,793,941</td>
+<td>10-Q/K period_end 2026-04-21, filed 2026-04-28 (10-Q)</td>
+</tr>
+<tr>
+<td><strong>Market cap</strong> = цена×shares</td>
+<td><strong>$29.114B</strong></td>
+<td>изчислено · vorgan.base</td>
+</tr>
+<tr>
+<td>total_debt</td>
+<td>$40.307B</td>
+<td>10-Q/K period_end 2026-03-31, filed 2026-04-28 (10-Q)</td>
+</tr>
+<tr>
+<td>cash_and_equivalents</td>
+<td>$0.168B</td>
+<td>10-Q/K period_end 2026-03-31, filed 2026-04-28 (10-Q)</td>
+</tr>
+<tr>
+<td><strong>EV</strong> = mktcap+debt−cash</td>
+<td><strong>$69.253B</strong></td>
+<td>изчислено · vorgan.base</td>
+</tr>
+<tr>
+<td>revenues_ttm</td>
+<td>$19.609B</td>
+<td>TTM 4 тримес. до 2026-03-31, filed 2026-04-28 (10-Q)</td>
+</tr>
+<tr>
+<td>net_income_ttm</td>
+<td>$3.554B</td>
+<td>TTM 4 тримес. до 2026-03-31, filed 2026-04-28 (10-Q)</td>
+</tr>
+<tr>
+<td>CFO_ttm (operating_cash_flow)</td>
+<td>$6.003B</td>
+<td>TTM 4 тримес. до 2026-03-31, filed 2026-04-28 (10-Q)</td>
+</tr>
+<tr>
+<td>capex_ttm</td>
+<td>$6.646B</td>
+<td>TTM 4 тримес. до 2026-03-31, filed 2026-04-28 (10-Q)</td>
+</tr>
+<tr>
+<td><strong>FCF_ttm</strong> = CFO−capex</td>
+<td><strong>$-0.643B</strong></td>
+<td>изчислено · vorgan.base</td>
+</tr>
+<tr>
+<td>gross_profit_ttm</td>
+<td>ЛИПСВА</td>
+<td>ЛИПСВА</td>
+</tr>
+<tr>
+<td>stockholders_equity</td>
+<td>$17.320B</td>
+<td>10-Q/K period_end 2026-03-31, filed 2026-04-28 (10-Q)</td>
+</tr>
+<tr>
+<td>dividends_paid_ttm</td>
+<td>$1.293B</td>
+<td>TTM 4 тримес. до 2026-03-31, filed 2026-04-28 (10-Q)</td>
+</tr>
+<tr>
+<td>buybacks_ttm</td>
+<td>$0.058B</td>
+<td>TTM 4 тримес. до 2026-03-31, filed 2026-04-28 (10-Q)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Съотношения (текущи)</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Ratio</th>
+<th>Стойност</th>
+<th>Дефиниция</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P/E trailing</td>
+<td>8.19x</td>
+<td>market cap / net_income_ttm</td>
+</tr>
+<tr>
+<td>EV/Sales</td>
+<td>3.53x</td>
+<td>EV / revenues_ttm</td>
+</tr>
+<tr>
+<td>EV/GP</td>
+<td>ЛИПСВА</td>
+<td>EV / gross_profit_ttm</td>
+</tr>
+<tr>
+<td>FCF yield</td>
+<td>-2.21%</td>
+<td>FCF_ttm / market cap</td>
+</tr>
+<tr>
+<td>P/B</td>
+<td>1.68x</td>
+<td>market cap / stockholders_equity</td>
+</tr>
+<tr>
+<td>Net payout yield</td>
+<td>4.64%</td>
+<td>(div+buyback)_ttm / market cap</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Синтетичен EPS</h2>
+<p><strong>$9.24</strong> = net_income_ttm / shares.</p>
+<blockquote>
+<p>ЕТИКЕТ: shares = cover-page instant (dei), НЕ diluted WASO → синтетичният EPS е приблизителен; diluted би вдигнал броя акции → P/E малко по-висок. Сравни с ranked <code>eps_ttm</code> и yfinance по-долу.</p>
+</blockquote>
+<h2>3. Историческа P/E лента (месечна, PIT, без lookahead)</h2>
+<p>Прозорец: <strong>2020-06 … 2026-07</strong> (архивът започва 2020-06; ~6 г., не 10 — ЛИПСВА по-стара история). Метод: цена в края на месеца × shares(в днешна split-база) / net_income_ttm, всичко as-known-at месеца.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Версия</th>
+<th>n мес.</th>
+<th>median</th>
+<th>p25</th>
+<th>p75</th>
+<th>min</th>
+<th>max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAW (close, dividend-неадjust)</td>
+<td>74</td>
+<td>33.88</td>
+<td>18.07</td>
+<td>46.15</td>
+<td>6.32</td>
+<td>493.98</td>
+</tr>
+<tr>
+<td>TR (value_tr, dividend-adj)</td>
+<td>74</td>
+<td>29.11</td>
+<td>13.79</td>
+<td>40.77</td>
+<td>6.24</td>
+<td>426.04</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>RAW close (split-adjusted, dividend-UNadjusted) is the correct P/E history; TR (value_tr, dividend-adjusted) understates it — the fatter the dividend, the larger the drag (MO ~-17% on the median). Отклонението на най-старата точка (2020-06): <code>close</code> vs <code>value_tr</code> = <strong>24.56%</strong>.</li>
+</ul>
+<h2>4. Кръстосана проверка срещу yfinance (VENDOR SNAPSHOT, НЕ PIT)</h2>
+<p>yfinance <code>.info</code>, дръпнато 2026-07-08. Етикет: <strong>VENDOR SNAPSHOT NOT PIT</strong> — различна vintage на акциите и различни дефиниции на debt/cash.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Метрика</th>
+<th>Моя (PIT)</th>
+<th>yfinance (VENDOR)</th>
+<th>Δ</th>
+<th>Коментар</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Market cap</td>
+<td>$29.114B</td>
+<td>$29.144B</td>
+<td>-0.1%</td>
+<td>yf shares 384,793,941 vs моите 384,793,941</td>
+</tr>
+<tr>
+<td>P/E trailing</td>
+<td>8.19x</td>
+<td>8.23x</td>
+<td>-0.5%</td>
+<td>yf diluted EPS; аз NI/cover-shares</td>
+</tr>
+<tr>
+<td>EV</td>
+<td>$69.253B</td>
+<td>$73.320B</td>
+<td>-5.5%</td>
+<td>yf debt $42.697B/cash $0.168B vs мои $40.307B/$0.168B</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>total_debt = само дълговите тагове от баланса; провизии/лизинги извън тях не влизат (vendor дефиниции са по-широки — само отбелязваме).</p>
+</blockquote>
+<h2>5. Секторен контекст (ranked_stocks.json)</h2>
+<p>Източник: <code>dashboards/stock-selection-dashboard/app/data/ranked_stocks.json</code> (последен ranked run).</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Поле</th>
+<th>Стойност</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rank (от 503)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>composite_score</td>
+<td>2.0745</td>
+</tr>
+<tr>
+<td>value_score</td>
+<td>2.7609</td>
+</tr>
+<tr>
+<td>quality_score</td>
+<td>0.9007</td>
+</tr>
+<tr>
+<td>trend_score</td>
+<td>1.7234</td>
+</tr>
+<tr>
+<td>risk_score</td>
+<td>-0.5838</td>
+</tr>
+<tr>
+<td>pe_ratio (ranked)</td>
+<td>8.1348</td>
+</tr>
+<tr>
+<td>моя P/E trailing</td>
+<td>8.19</td>
+</tr>
+<tr>
+<td>eps_ttm (ranked)</td>
+<td>9.2 · моят синт. 9.24</td>
+</tr>
+<tr>
+<td>market_cap (ranked)</td>
+<td>$28.798B</td>
+</tr>
+<tr>
+<td>pb_ratio (ranked)</td>
+<td>1.6707</td>
+</tr>
+<tr>
+<td>ev_ebitda (ranked)</td>
+<td>8.512</td>
+</tr>
+<tr>
+<td>net_payout_yield (ranked)</td>
+<td>0.1249 · мой 0.0464</td>
+</tr>
+<tr>
+<td>dividend_yield (ranked)</td>
+<td>0.0464</td>
+</tr>
+<tr>
+<td>roe / gpa (ranked)</td>
+<td>0.1886 / 0.1018</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Особености (наблюдения от данните, не тълкуване)</h2>
+<ul>
+<li><strong>gross_profit ЛИПСВА</strong> в EDGAR за това име → <strong>EV/GP не може да се сметне</strong> (отказ). Utility/финансови не отчитат класически gross profit.</li>
+<li><strong>FCF_ttm отрицателен</strong> ($-0.643B, FCF yield -2.21%): capex_ttm ($6.646B) &gt; CFO_ttm ($6.003B). Структурна черта (rate-base), не дистрес — виж conventions.FCF_NEGATIVE_STRUCTURAL.</li>
+<li><strong>RAW vs TR лента:</strong> median 33.88 vs 29.11 (TR подценява — дивидентен drag; на най-старата точка 24.56%). Ползвай RAW за P/E история.</li>
+<li>Текущ trailing P/E 8.19 е ПОД собствената RAW median (33.88); p25 18.07, p75 46.15. (Само наблюдение — опашките min/max може да са artefact на near-zero печалба.)</li>
+</ul>
+<hr />
+<p><em>Генерирано детерминистично от vorgan.base (портирано от <code>C:/Users/tsach/AppData/Local/Temp/claude/C--Projects/67d453b0-30fd-4b39-8a29-e83ddaae4718/scratchpad/probe5/extract.py</code>); данни as-of 2026-07-02 (цени) / най-късните EDGAR filing-и по-горе. Р6 вътрешен.</em></p>
+</article>
+<div class="foot">Лице на оценъчния орган · нелистнат уред · vintage 2026-07 · съдържанието е дословно копие от органа.</div>
+</div>
+</body>
+</html>
