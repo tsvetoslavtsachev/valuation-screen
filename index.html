@@ -115,7 +115,7 @@ svg.memfig text,svg.epochfig text{font-size:10px}
 .figlegend .lgrow{display:flex;gap:6px;align-items:center;white-space:nowrap}
 .lgsq{display:inline-block;width:9px;height:9px;border-radius:2px;
   border:2px solid var(--surface);box-shadow:0 0 0 1px var(--grid)}
-.lgtri{color:var(--warn);font-size:9px}
+.lgbar{color:var(--warn);font-size:10px;line-height:1.35}
 .lgmed{display:inline-block;width:2px;height:12px;background:var(--ink2)}
 .lgzone{display:inline-block;width:12px;height:8px;background:var(--mid);
   border:1px solid var(--grid);border-radius:2px}
@@ -242,12 +242,12 @@ function visible(){
 const COLS=[
  {k:"ticker",h:"Тикер",sub:"клик на реда = детайл",l:1,tk:1},
  {k:"sector",h:"Сектор",sub:"",l:1},
- {k:"_viz",h:"Каква оценка залага цената?",sub:"▮ иска (8–10%) · │ 6г медиана · ▒ p25–p75 · ос P/E (×E)",viz:1},
+ {k:"_viz",h:"Каква оценка залага цената?",sub:"▮ летвата (8–10%/г) · │ 6г медиана · ▒ зоната p25–p75 · ос: пъти печалбата (×E)",viz:1},
  {k:"eps_growth_x",h:"Залага ръст",sub:"печалба ×N · за T г"},
- {k:"implied_exit_pe_9",h:"Иска кратно",sub:"@8–10% · ×E = P/E"},
+ {k:"implied_exit_pe_9",h:"Летвата",sub:"кратното за 8–10%/г · ×E = P/E"},
  {k:"implied_cagr_at_median",h:"≈ резултат/г",sub:"ако EPS+кратно→медиана"},
  {k:"pe_median_6y_raw",h:"Историята",sub:"6г медиана ×E · месеци"},
- {k:"gap",h:"Напрежение",sub:"иска − история (×E т.)"},
+ {k:"gap",h:"Напрежение",sub:"летвата − историята (×E т.)"},
  {k:"fy3_avg_eps",h:"EPS FY3E",sub:"консенсус · n"},
  {k:"pe_trailing",h:"P/E днес",sub:"trailing ×E"},
  {k:"div_yield_pct",h:"Див %",sub:""},
@@ -412,7 +412,23 @@ function memSvg(r){
   s+='<text x="'+(L-8)+'" y="'+(yV+4)+'" text-anchor="end" fill="var(--muted)">ср. [S]</text>';
   s+='<line x1="'+L+'" y1="'+yV+'" x2="'+(W-Rm)+'" y2="'+yV+'" stroke="var(--grid)" stroke-width="1" stroke-dasharray="1 3"/>';
   s+='<text x="'+(L-8)+'" y="'+(yAx-6)+'" text-anchor="end" fill="var(--ink2)">история</text>';
-  s+='<text x="'+(L-8)+'" y="'+(yI+5)+'" text-anchor="end" fill="var(--warn)">иска @9%</text>';
+  s+='<text x="'+(L-8)+'" y="'+(yI+5)+'" text-anchor="end" fill="var(--warn)">летвата</text>';
+  /* М31-FIX2: летвата = тънка вертикална лента imp@8→imp@10 (кратното РАСТЕ с r —
+     Форма 1: FV=цена·(1+r)^h − дивиденти — затова @8 е лявото рамо, min→max robust)
+     с централна черта на imp@9; целият език на графиката = „летвата". */
+  const i8=r.implied_exit_pe_8, i10=r.implied_exit_pe_10;
+  if(imp!==null && i8!==null && i10!==null){
+    const lo=Math.min(i8,i10), hi=Math.max(i8,i10);
+    const a=X(lo), b=X(hi), fy=r.fy3_col||'FY3';
+    const tip='За да върне тази цена 8–10% годишно до края на '+fy+', компанията трябва да '
+      +'излезе на кратно между '+f1(lo)+'×E и '+f1(hi)+'×E върху консенсусната печалба '
+      +'(чертата = 9%). Под собствената история = скромна летва; над нея = героична.';
+    s+='<rect x="'+a+'" y="18" width="'+Math.max(b-a,2)+'" height="'+(H-22-18)
+      +'" fill="var(--warnbg)"><title>'+tip+'</title></rect>';
+    s+='<line x1="'+X(imp)+'" y1="18" x2="'+X(imp)+'" y2="'+(H-22)
+      +'" stroke="var(--warn)" stroke-width="2"><title>'+tip+'</title></line>';
+    s+='<text x="'+X(imp)+'" y="'+(yI+17)+'" text-anchor="middle" fill="var(--warn)">'+ov(imp)+f1(imp)+'×</text>';
+  }
   if(p25!==null && p75!==null){ const a=X(Math.min(p25,p75)),b=X(Math.max(p25,p75));
     s+='<rect x="'+a+'" y="'+(yAx-8)+'" width="'+Math.max(b-a,1.5)+'" height="16" rx="2" fill="var(--mid)"><title>собствена зона p25–p75: '+f1(p25)+'–'+f1(p75)+'×E</title></rect>'; }
   if(med!==null){ const x=X(med);
@@ -429,14 +445,10 @@ function memSvg(r){
       +(c!==null?' · ако кратното се върне тук: ≈ '+(c>=0?'+':'')+(c*100).toFixed(0)+'%/г (условно)':'');
     s+='<circle cx="'+x+'" cy="'+(yV+STEP_DY[p[0]])+'" r="4.5" fill="'+STEP_COLOR[p[0]]
       +'" stroke="var(--surface)" stroke-width="2"><title>'+tip+'</title></circle>'; }
-  if(imp!==null){ const x=X(imp);
-    s+='<line x1="'+x+'" y1="'+yAx+'" x2="'+x+'" y2="'+(yI-7)+'" stroke="var(--warn)" stroke-width="1" stroke-dasharray="2 2"/>';
-    s+='<path d="M'+x+' '+(yI-7)+' L'+(x-5)+' '+(yI+4)+' L'+(x+5)+' '+(yI+4)+' Z" fill="var(--warn)"><title>иска @9%: изходно кратно '+f1(imp)+'×E</title></path>';
-    s+='<text x="'+x+'" y="'+(yI+17)+'" text-anchor="middle" fill="var(--warn)">'+ov(imp)+f1(imp)+'×</text>'; }
   return s+'</svg>';
 }
-/* М31-FIX1 — легендата ОТСТРАНИ на стълбата: всичко на графиката е именувано
-   (4-те цветни стъпала · кехлибареното „иска @9%" · медианата · зоната p25–p75). */
+/* М31-FIX1/FIX2 — легендата ОТСТРАНИ на стълбата: всичко на графиката е именувано
+   (4-те цветни стъпала · кехлибарената ЛЕТВА · медианата · зоната p25–p75). */
 function memLegend(r){
   const steps=[[5,r.koyfin_pe_avg_5y],[10,r.koyfin_pe_avg_10y],[15,r.koyfin_pe_avg_15y],[20,r.koyfin_pe_avg_20y]];
   let h='<div class="figlegend">';
@@ -445,7 +457,8 @@ function memLegend(r){
   if(steps.some(p=>p[1]!==null))
     h+='<div class="lgnote">ср. = средна (не медиана), източник [S]</div>';
   if(r.implied_exit_pe_9!==null)
-    h+='<div class="lgrow"><span class="lgtri">▲</span>иска @9%</div>';
+    h+='<div class="lgrow" style="white-space:normal;max-width:150px;align-items:flex-start">'
+      +'<span class="lgbar">▮</span><span>летвата — кратното, което връща 8–10% годишно</span></div>';
   if(r.pe_median_6y_raw!==null)
     h+='<div class="lgrow"><span class="lgmed"></span>6г медиана</div>';
   if(r.pe_p25_6y_raw!==null && r.pe_p75_6y_raw!==null)
@@ -485,7 +498,7 @@ function figuresHtml(r){
   if(!m && !e) return "";
   let h='<div class="figs">';
   if(m) h+='<div class="figblock"><div class="fightitle">Стълбата на паметта'
-    +' <span class="figsub">— каквото цената иска @9% (кехлибар) спрямо собствената 6г история и vendor средните за 5/10/15/20 г [S]</span></div>'
+    +' <span class="figsub">— летвата (кратното за 8–10%/г, кехлибар) спрямо собствената 6г история и vendor средните за 5/10/15/20 г [S]</span></div>'
     +'<div class="figrow">'+m+memLegend(r)+'</div>'
     +'<div class="figcap">Точките са <b>средни</b> (не медиани), източник <b>[S]</b> — всяка е средното P/E за хоризонта; цветът = хоризонтът (легендата). Оста е логаритмична (×E = пъти печалбата). LT средната е нарочно пропусната (mean-капан).</div></div>';
   if(e) h+='<div class="figblock"><div class="fightitle">Епохите'
@@ -500,13 +513,13 @@ function detailHtml(r){
    ["EPS "+(r.fy3_col||"FY3"),f2(r.fy3_avg_eps)],["n аналитици",r.n_fy3??"—"],
    ["Ръст залага",(r.eps_growth_x!==null?"×"+f1(r.eps_growth_x):"—")],
    ["Хоризонт",(r.horizon_years!==null?f1(r.horizon_years)+" г":"—")],
-   ["Иска @8%",(r.implied_exit_pe_8!==null?f1(r.implied_exit_pe_8)+"×E":"—")],
+   ["Летвата @8%",(r.implied_exit_pe_8!==null?f1(r.implied_exit_pe_8)+"×E":"—")],
    ["@9%",(r.implied_exit_pe_9!==null?f1(r.implied_exit_pe_9)+"×E":"—")],
    ["@10%",(r.implied_exit_pe_10!==null?f1(r.implied_exit_pe_10)+"×E":"—")],
    ["Медиана 6г",(r.pe_median_6y_raw!==null?f1(r.pe_median_6y_raw)+"×E":"—")],
    ["p25–p75",(r.pe_p25_6y_raw!==null?f1(r.pe_p25_6y_raw)+"–"+f1(r.pe_p75_6y_raw)+"×E":"—")],
    ["≈ резултат@медиана",(cg!==null?(cg>=0?"+":"")+(cg*100).toFixed(1)+"%/г":"—")],
-   ["Зона (иска vs p25–p75)",(r.zone_pos||"—")],
+   ["Зона (летвата vs p25–p75)",(r.zone_pos||"—")],
    ["Месеци",r.n_months],["Напрежение",(r.gap!==null?(r.gap>0?"+":"")+f1(r.gap)+"×E т.":"—")]];
   return '<div class="sent">'+sentence(r)+'</div>'
    + flagQuals(r).map(q=>'<div class="qual">⚠ '+q+'</div>').join("")
