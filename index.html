@@ -465,32 +465,75 @@ function memLegend(r){
     h+='<div class="lgrow"><span class="lgzone"></span>зона p25–p75</div>';
   return h+'</div>';
 }
-/* ---------- М31: „Епохите" (стъпаловидна мини-графика на трите bbg 5г прозореца) ---------- */
+/* ---------- М31: „Епохите" (стъпаловидна мини-графика на трите bbg 5г прозореца) ----------
+   М31-FIX3: + 4-та позиция „сега" (trailing P/E — НАША сметка, EDGAR панел; контурна
+   точка, стилово различна от vendor възлите, НЕ от 4-те хоризонт-цвята) + летвата като
+   ХОРИЗОНТАЛНА кехлибарена ивица imp@8→imp@10 с черта @9 (същият визуален език като
+   стълбата) + ×N етикети между съседните непразни епохни възли (display-сметка върху
+   двете видими стойности; между „последни 5" и „сега" НЯМА ×N — различни мерки:
+   5г средна vs trailing точка). */
 function epochsSvg(r){
   const wins=[["2012–16",r.bbg_pe5y_2016],["2017–21",r.bbg_pe5y_2021],["последни 5 г",r.bbg_pe5y_lf]];
   const vals=wins.map(w=>w[1]).filter(v=>v!==null);
   if(!vals.length) return "";
+  const tr=r.pe_trailing;                                          // наша сметка (EDGAR панел)
+  const i8=r.implied_exit_pe_8, i9=r.implied_exit_pe_9, i10=r.implied_exit_pe_10;
   const W=560,H=150,L=46,Rm=18,T=24,B=30,IW=W-L-Rm,IH=H-T-B;
-  const vmax=Math.max(...vals),vmin=Math.min(...vals);
-  const top=vmax*1.15,bot=Math.max(0,vmin*0.6),span=(top-bot)||1;
+  // скалата ЗАДЪЛЖИТЕЛНО включва и „сега", и летвата — нищо не изпада (FIX3 П1)
+  const all=[...vals]; if(tr!==null) all.push(tr);
+  if(i8!==null) all.push(i8); if(i10!==null) all.push(i10);
+  const vmax=Math.max(...all),vmin=Math.min(...all);
+  let top=vmax*1.15,bot=Math.max(0,vmin*0.6);
+  /* П3 ПРЕДПАЗИТЕЛ НА СКАЛАТА — ЗАМРАЗЕНО ПРАВИЛО (М31-FIX3): при плоски стойности
+     стъпалото да не драматизира. Ако top/bot < 1.6 → диапазонът се разширява
+     СИМЕТРИЧНО (bot надолу, top нагоре, bot ≥ 0) до top/bot = 1.6:
+     d = (1.6·bot − top)/2.6, клампнато до bot. (Бележка: с падингите
+     top=vmax·1.15 / bot=vmin·0.6 съотношението е ≥ 1.92 по конструкция —
+     предпазителят е спяща застраховка, ако падингите някога се стеснят.) */
+  if(bot>0 && top/bot<1.6){ let d=(1.6*bot-top)/2.6; if(d>bot) d=bot; bot-=d; top+=d; }
+  const span=(top-bot)||1;
   const Y=v=>T+IH*(1-(v-bot)/span);
-  const xs=[L+IW*0.16,L+IW*0.5,L+IW*0.84], half=IW*0.13;
+  const xs=[L+IW*0.13,L+IW*0.38,L+IW*0.63], half=IW*0.10;
+  const xNow=L+IW*0.88;
   let s='<svg class="epochfig" viewBox="0 0 '+W+' '+H+'" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Епохите">';
   for(const g of [bot,(bot+top)/2,top]){ const y=Y(g);
     s+='<line x1="'+L+'" y1="'+y+'" x2="'+(W-Rm)+'" y2="'+y+'" stroke="var(--grid)" stroke-width="1"/>';
     s+='<text x="'+(L-6)+'" y="'+(y+3)+'" text-anchor="end" fill="var(--muted)">'+f1(g)+'×</text>'; }
-  const sp=[]; wins.forEach((w,i)=>{ if(w[1]!==null) sp.push([i,xs[i],Y(w[1])]); });
+  // летвата (FIX3 П1) — хоризонтална ивица през цялата ширина; ЧЕСТНО пропусната при ОТКАЗ
+  if(i8!==null && i9!==null && i10!==null){
+    const lo=Math.min(i8,i10), hi=Math.max(i8,i10), fy=r.fy3_col||'FY3';
+    const tip='За да върне тази цена 8–10% годишно до края на '+fy+', компанията трябва да '
+      +'излезе на кратно между '+f1(lo)+'×E и '+f1(hi)+'×E върху консенсусната печалба '
+      +'(чертата = 9%). Под собствената история = скромна летва; над нея = героична.';
+    s+='<rect x="'+L+'" y="'+Y(hi)+'" width="'+(W-L-Rm)+'" height="'+Math.max(Y(lo)-Y(hi),2)
+      +'" fill="var(--warnbg)"><title>'+tip+'</title></rect>';
+    s+='<line x1="'+L+'" y1="'+Y(i9)+'" x2="'+(W-Rm)+'" y2="'+Y(i9)
+      +'" stroke="var(--warn)" stroke-width="2"><title>'+tip+'</title></line>';
+  }
+  const sp=[]; wins.forEach((w,i)=>{ if(w[1]!==null) sp.push([i,xs[i],Y(w[1]),w[1]]); });
   let d="";
   sp.forEach((p,k)=>{ const x0=p[1]-half,x1=p[1]+half,y=p[2];
     if(k===0 || p[0]-sp[k-1][0]>1){ d+=(k===0?"":" ")+"M"+x0+" "+y+" L"+x1+" "+y; }
     else { const py=sp[k-1][2]; d+=" L"+x0+" "+py+" L"+x0+" "+y+" L"+x1+" "+y; } });
   s+='<path d="'+d+'" fill="none" stroke="var(--cool)" stroke-width="2" stroke-linejoin="round"/>';
+  // ×N разликите в пъти (FIX3 П2) — само на нарисуваното стъпало (последователни позиции)
+  sp.forEach((p,k)=>{ if(k===0 || p[0]-sp[k-1][0]>1) return;
+    const ratio=p[3]/sp[k-1][3], x0=p[1]-half;
+    s+='<text x="'+x0+'" y="'+(Math.min(p[2],sp[k-1][2])-5)+'" text-anchor="middle" '
+      +'fill="var(--ink2)" font-size="9.5">×'+ratio.toFixed(1)+'</text>'; });
   wins.forEach((w,i)=>{ const x=xs[i];
     if(w[1]!==null){ const y=Y(w[1]);
       s+='<circle cx="'+x+'" cy="'+y+'" r="3.5" fill="var(--cool)"><title>'+w[0]+': '+f1(w[1])+'×E — vendor 5-годишна СРЕДНА [S]</title></circle>';
       s+='<text x="'+x+'" y="'+(y-9)+'" text-anchor="middle" fill="var(--ink2)">'+f1(w[1])+'×</text>'; }
     else { s+='<text x="'+x+'" y="'+(T+IH/2)+'" text-anchor="middle" fill="var(--muted)">няма</text>'; }
     s+='<text x="'+x+'" y="'+(H-8)+'" text-anchor="middle" fill="var(--muted)">'+w[0]+'</text>'; });
+  // „сега" (FIX3 П1) — КОНТУРНА точка (наша сметка); липсва ли trailing → „няма"
+  if(tr!==null){ const y=Y(tr);
+    s+='<circle cx="'+xNow+'" cy="'+y+'" r="4.5" fill="var(--surface)" stroke="var(--ink2)" '
+      +'stroke-width="2"><title>днес: '+f1(tr)+'×E trailing (наша сметка, EDGAR панел)</title></circle>';
+    s+='<text x="'+xNow+'" y="'+(y-9)+'" text-anchor="middle" fill="var(--ink2)">'+f1(tr)+'×</text>'; }
+  else { s+='<text x="'+xNow+'" y="'+(T+IH/2)+'" text-anchor="middle" fill="var(--muted)">няма</text>'; }
+  s+='<text x="'+xNow+'" y="'+(H-8)+'" text-anchor="middle" fill="var(--muted)">сега</text>';
   return s+'</svg>';
 }
 function figuresHtml(r){
@@ -502,8 +545,8 @@ function figuresHtml(r){
     +'<div class="figrow">'+m+memLegend(r)+'</div>'
     +'<div class="figcap">Точките са <b>средни</b> (не медиани), източник <b>[S]</b> — всяка е средното P/E за хоризонта; цветът = хоризонтът (легендата). Оста е логаритмична (×E = пъти печалбата). LT средната е нарочно пропусната (mean-капан).</div></div>';
   if(e) h+='<div class="figblock"><div class="fightitle">Епохите'
-    +' <span class="figsub">— трите 5-годишни средни P/E прозореца във времето [S]</span></div>'
-    +e+'<div class="figcap">Всеки възел е <b>средното</b> P/E за пет фискални години (vendor <b>[S]</b>); стъпалото показва как нивото на оценката се е местило между епохите. Не прогноза, никога доларов таргет.</div></div>';
+    +' <span class="figsub">— трите 5-годишни средни P/E прозореца [S] + „сега" (наша сметка) и летвата</span></div>'
+    +e+'<div class="figcap">Пълните възли са <b>средното</b> P/E за пет фискални години — <b>vendor [S]</b> (чуждо); контурната точка „сега" = trailing P/E — <b>наша сметка</b> (EDGAR панел); ▮ летвата (8–10%/г) — същият кехлибар като стълбата; ×N = пъти между съседни епохи (сметка върху двете видими стойности). Не прогноза, никога доларов таргет.</div></div>';
   return h+'</div>';
 }
 function detailHtml(r){
