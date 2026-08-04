@@ -28,6 +28,19 @@ CARDS_OUT = os.path.join(OUT, "cards")
 TICKERS = ["NVDA", "MO", "EIX"]
 VARIANTS = ["BASE", "REVERSE"]
 
+
+def latest_vintage():
+    """Най-новият SCREEN-YYYY-MM.html в органа (месечният цикъл сам мести лицето).
+    Детерминистично: лексикографски максимум на YYYY-MM. Отказва при липса."""
+    pat = re.compile(r"^SCREEN-(\d{4}-\d{2})\.html$")
+    vs = sorted(m.group(1) for f in os.listdir(SRC) if (m := pat.match(f)))
+    if not vs:
+        raise SystemExit(f"[ОТКАЗ] няма SCREEN-*.html в {SRC}")
+    return vs[-1]
+
+
+VINTAGE = latest_vintage()
+
 VARIANT_BG = {"BASE": "оценъчна котва", "REVERSE": "обърнатата сметка"}
 
 # ------------------------------------------------------------ стил (картон)
@@ -144,7 +157,7 @@ def build_cards():
                 f"{body}\n"
                 "</article>\n"
                 '<div class="foot">Лице на оценъчния орган · нелистнат уред · '
-                "vintage 2026-07 · съдържанието е дословно копие от органа.</div>\n"
+                f"vintage {VINTAGE} · съдържанието е дословно копие от органа.</div>\n"
                 "</div>\n"
                 "</body>\n"
                 "</html>\n"
@@ -153,7 +166,7 @@ def build_cards():
 
 
 def build_index():
-    src_html = os.path.join(SRC, "SCREEN-2026-07.html")
+    src_html = os.path.join(SRC, f"SCREEN-{VINTAGE}.html")
     html = read_text(src_html)
 
     # 1) noindex + навигационен стил в <head>
@@ -175,7 +188,7 @@ def build_index():
         '<span class="vslab">Картони:</span>\n'
         f"{nav_links}\n"
         "</nav>\n"
-        '<div class="vsnote">нелистнат уред · vintage 2026-07 · '
+        f'<div class="vsnote">нелистнат уред · vintage {VINTAGE} · '
         "обновява се с месечния препис</div>\n"
     )
     marker_wrap = '<body><div class="wrap">'
