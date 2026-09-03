@@ -156,7 +156,7 @@ def build_cards():
                 '<article class="card">\n'
                 f"{body}\n"
                 "</article>\n"
-                '<div class="foot">Лице на оценъчния орган · нелистнат уред · '
+                '<div class="foot">Лице на оценъчния уред · нелистнат уред · '
                 f"vintage {VINTAGE} · съдържанието е дословно копие от органа.</div>\n"
                 "</div>\n"
                 "</body>\n"
