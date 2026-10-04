@@ -5,7 +5,7 @@ publish.py — ЛИЦЕТО на оценъчния орган (мандат №
 
 Детерминистичен рендер/пренос. Чете САМО (read-only) от
 C:/Projects/valuation-organ/cards/ и произвежда нелистнатото Pages лице
-в папката, в която живее този скрипт (C:/Projects/valuation-screen/):
+в папката, в която живее този скрипт (C:/Projects/companies/valuation-screen/):
 
   index.html                 <- SCREEN-2026-07.html (+ noindex + навигация + vintage ред)
   cards/{TICKER}-{VARIANT}.html <- съответния .md (markdown -> HTML, ДОСЛОВНО)
