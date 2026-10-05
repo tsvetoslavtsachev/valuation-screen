@@ -4,7 +4,7 @@
 publish.py — ЛИЦЕТО на оценъчния орган (мандат №29).
 
 Детерминистичен рендер/пренос. Чете САМО (read-only) от
-C:/Projects/valuation-organ/cards/ и произвежда нелистнатото Pages лице
+C:/Projects/companies/valuation-organ/cards/ и произвежда нелистнатото Pages лице
 в папката, в която живее този скрипт (C:/Projects/companies/valuation-screen/):
 
   index.html                 <- SCREEN-2026-07.html (+ noindex + навигация + vintage ред)
@@ -21,7 +21,7 @@ import re
 import markdown  # pinned: markdown==3.10.2 (виж доклада)
 
 # ---------------------------------------------------------------- пътища
-SRC = r"C:\Projects\valuation-organ\cards"          # READ-ONLY вход
+SRC = r"C:\Projects\companies\valuation-organ\cards"          # READ-ONLY вход
 OUT = os.path.dirname(os.path.abspath(__file__))     # изход = папката на скрипта
 CARDS_OUT = os.path.join(OUT, "cards")
 
