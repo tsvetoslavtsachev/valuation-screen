@@ -7,8 +7,12 @@ publish.py — ЛИЦЕТО на оценъчния орган (мандат №
 C:/Projects/companies/valuation-organ/cards/ и произвежда нелистнатото Pages лице
 в папката, в която живее този скрипт (C:/Projects/companies/valuation-screen/):
 
-  index.html                 <- SCREEN-2026-07.html (+ noindex + навигация + vintage ред)
-  cards/{TICKER}-{VARIANT}.html <- съответния .md (markdown -> HTML, ДОСЛОВНО)
+  index.html                 <- най-новият SCREEN-YYYY-MM.html (+ noindex + навигация + vintage ред)
+  cards/{TICKER}-{VARIANT}.html <- съответния .md (BASE, REVERSE, METHOD; markdown -> HTML, ДОСЛОВНО)
+
+ПРЕДПАЗИТЕЛЯТ (ПНЛ6): тикерите идват от cards/; отказ без запис, ако REVERSE или METHOD
+не е на бара на BASE. `--check` сверява вече записаното лице с органа (exit 1 при изоставане).
+`--src DIR` пуска от друго копие на cards/ (чист worktree на комитнатото състояние).
   .nojekyll                  (празен)
 
 КАРДИНАЛНО ПРАВИЛО: числата идват от органа; лицето само ги показва.
@@ -16,17 +20,83 @@ C:/Projects/companies/valuation-organ/cards/ и произвежда нелис�
 Никакви външни ресурси (CDN/http). Никакви git операции. Органът не се пипа.
 """
 
+import json
 import os
 import re
+import sys
 import markdown  # pinned: markdown==3.10.2 (виж доклада)
 
 # ---------------------------------------------------------------- пътища
-SRC = r"C:\Projects\companies\valuation-organ\cards"          # READ-ONLY вход
+ORGAN_CARDS = r"C:\Projects\companies\valuation-organ\cards"   # READ-ONLY вход
+
+
+def _arg_src():
+    """`--src DIR` пуска от друго копие на cards/ (напр. чист git worktree на органа
+    на комитнато състояние), за да не излезе чужда незавършена работа (ПНЛ6)."""
+    a = sys.argv[1:]
+    return os.path.abspath(a[a.index("--src") + 1]) if "--src" in a else ORGAN_CARDS
+
+
+SRC = _arg_src()
 OUT = os.path.dirname(os.path.abspath(__file__))     # изход = папката на скрипта
 CARDS_OUT = os.path.join(OUT, "cards")
 
-TICKERS = ["NVDA", "MO", "EIX"]
 VARIANTS = ["BASE", "REVERSE"]
+METHOD_HEAD = re.compile(r"^## \S+, карта по метода\s+\(винтидж ([^,)]+)[^)]*?, "
+                         r"цена ([\d.]+), (\d{4}-\d{2}-\d{2})\)")
+
+
+def card_pairs():
+    """Тикерите се вземат от органа, не от ръчен списък (ПНЛ6): всеки тикер,
+    който има и BASE, и REVERSE (.json и .md) в cards/."""
+    fs = set(os.listdir(SRC))
+    pat = re.compile(r"^([A-Z][A-Z0-9.]*)-REVERSE\.json$")
+    out = []
+    for f in sorted(fs):
+        m = pat.match(f)
+        if m and all(f"{m.group(1)}-{v}.{e}" in fs for v in VARIANTS for e in ("json", "md")):
+            out.append(m.group(1))
+    return out
+
+
+def method_tickers():
+    """Живите карти по метода {T}-METHOD.md; датираните копия са архив на органа."""
+    pat = re.compile(r"^([A-Z][A-Z0-9.]*)-METHOD\.md$")
+    return sorted(m.group(1) for f in os.listdir(SRC) if (m := pat.match(f)))
+
+
+def load_card(name):
+    with open(os.path.join(SRC, f"{name}.json"), "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def method_head(tk):
+    """(винтидж, цена, дата) от шапката на картата по метода."""
+    with open(os.path.join(SRC, f"{tk}-METHOD.md"), "r", encoding="utf-8") as f:
+        m = METHOD_HEAD.match(f.readline())
+    if not m:
+        raise SystemExit(f"[ОТКАЗ] {tk}-METHOD.md: шапката няма „винтидж …, цена X, дата“")
+    return m.group(1), m.group(2), m.group(3)
+
+
+def pair_problems(tickers):
+    """Двойка BASE/REVERSE на различен бар или с различна цена = разминаване.
+    Картата по метода на име с BASE трябва да носи цената и датата на бара на BASE."""
+    probs = []
+    for tk in tickers:
+        b, r = load_card(f"{tk}-BASE"), load_card(f"{tk}-REVERSE")
+        if r["bar_date"] != b["D_last"] or abs(r["price"] - b["price"]) > 1e-6:
+            probs.append(f"{tk}: BASE на бар {b['D_last']} (${b['price']:.2f}), "
+                         f"REVERSE на бар {r['bar_date']} (${r['price']:.2f})")
+    for tk in METHOD_TICKERS:
+        if tk not in tickers:
+            continue
+        b = load_card(f"{tk}-BASE")
+        _, px, d = method_head(tk)
+        if (px, d) != (f"{b['price']:.2f}", b["D_last"]):
+            probs.append(f"{tk}: BASE на бар {b['D_last']} (${b['price']:.2f}), "
+                         f"METHOD на цена ${px}, {d}")
+    return probs
 
 
 def latest_vintage():
@@ -40,8 +110,37 @@ def latest_vintage():
 
 
 VINTAGE = latest_vintage()
+TICKERS = card_pairs()
+METHOD_TICKERS = method_tickers()
 
-VARIANT_BG = {"BASE": "оценъчна котва", "REVERSE": "обърнатата сметка"}
+
+def face_cards():
+    """[(тикер, вариант)] за лицето: двойките BASE/REVERSE и картите по метода."""
+    out = []
+    for tk in sorted(set(TICKERS) | set(METHOD_TICKERS)):
+        out += [(tk, v) for v in VARIANTS if tk in TICKERS]
+        if tk in METHOD_TICKERS:
+            out.append((tk, "METHOD"))
+    return out
+
+
+def card_label(tk, var):
+    """(бар, етикет) на една карта: на кой бар и с кой консенсус е, прочетено от органа."""
+    if var == "METHOD":
+        v, px, d = method_head(tk)
+        if tk in TICKERS:
+            return d, f"бар {d} · конс. {v}"
+        return f"vendor-{d}", f"цена на доставчика ${px} от булк {v} · картата от {d}"
+    b = load_card(f"{tk}-BASE")
+    if var == "BASE":
+        return b["D_last"], f"бар {b['D_last']}"
+    r = load_card(f"{tk}-REVERSE")
+    kind = " булк" if r.get("consensus_format") else ""
+    return r["bar_date"], f"бар {r['bar_date']} · конс. {r['vintage']}{kind}"
+
+
+VARIANT_BG = {"BASE": "оценъчна котва", "REVERSE": "обърнатата сметка",
+              "METHOD": "картата по метода"}
 
 # ------------------------------------------------------------ стил (картон)
 CARD_CSS = """
@@ -124,45 +223,47 @@ def wrap_tables(html):
 
 def build_cards():
     md = markdown.Markdown(extensions=["tables"])
-    for tk in TICKERS:
-        for var in VARIANTS:
-            name = f"{tk}-{var}"
-            src_md = os.path.join(SRC, f"{name}.md")
-            body = md.reset().convert(read_text(src_md))
-            body = wrap_tables(body)
+    cards = face_cards()
+    for tk, var in cards:
+        name = f"{tk}-{var}"
+        body = md.reset().convert(read_text(os.path.join(SRC, f"{name}.md")))
+        body = wrap_tables(body)
 
-            sibling = "REVERSE" if var == "BASE" else "BASE"
-            sibling_href = f"{tk}-{sibling}.html"
-            title = f"{tk} · {var} — {VARIANT_BG[var]} (Р6)"
+        bar, label = card_label(tk, var)
+        siblings = "\n".join(f'<a href="{tk}-{v}.html">{tk} · {v}</a>'
+                             for t, v in cards if t == tk and v != var)
+        title = f"{tk} · {var} — {VARIANT_BG[var]} (Р6)"
 
-            page = (
-                "<!doctype html>\n"
-                '<html lang="bg">\n'
-                "<head>\n"
-                '<meta charset="utf-8">\n'
-                '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
-                '<meta name="robots" content="noindex, nofollow">\n'
-                f"<title>{title}</title>\n"
-                f"<style>\n{CARD_CSS}\n</style>\n"
-                "</head>\n"
-                "<body>\n"
-                '<div class="wrap">\n'
-                '<nav class="nav">\n'
-                '<a href="../index.html">&larr; Скрийн</a>\n'
-                f'<a href="{sibling_href}">{tk} · {sibling}</a>\n'
-                '<span class="sep"></span>\n'
-                f'<span style="color:var(--muted);font-size:12px">{tk} · {var}</span>\n'
-                "</nav>\n"
-                '<article class="card">\n'
-                f"{body}\n"
-                "</article>\n"
-                '<div class="foot">Лице на оценъчния уред · нелистнат уред · '
-                f"vintage {VINTAGE} · съдържанието е дословно копие от органа.</div>\n"
-                "</div>\n"
-                "</body>\n"
-                "</html>\n"
-            )
-            write_bytes(os.path.join(CARDS_OUT, f"{name}.html"), page)
+        page = (
+            "<!doctype html>\n"
+            '<html lang="bg">\n'
+            "<head>\n"
+            '<meta charset="utf-8">\n'
+            '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
+            '<meta name="robots" content="noindex, nofollow">\n'
+            f'<meta name="vorgan-card" content="{name} bar={bar}">\n'
+            f"<title>{title}</title>\n"
+            f"<style>\n{CARD_CSS}\n</style>\n"
+            "</head>\n"
+            "<body>\n"
+            '<div class="wrap">\n'
+            '<nav class="nav">\n'
+            '<a href="../index.html">&larr; Скрийн</a>\n'
+            f"{siblings}\n"
+            '<span class="sep"></span>\n'
+            f'<span style="color:var(--muted);font-size:12px">{tk} · {var} · {label}</span>\n'
+            "</nav>\n"
+            '<article class="card">\n'
+            f"{body}\n"
+            "</article>\n"
+            '<div class="foot">Лице на оценъчния уред · нелистнат уред · '
+            f"тази карта: {label} · скрийнът е vintage {VINTAGE} · "
+            "съдържанието е дословно копие от органа.</div>\n"
+            "</div>\n"
+            "</body>\n"
+            "</html>\n"
+        )
+        write_bytes(os.path.join(CARDS_OUT, f"{name}.html"), page)
 
 
 def build_index():
@@ -178,18 +279,23 @@ def build_index():
     assert html.count(marker_head) >= 1, "липсва </head> маркер в SCREEN html"
     html = html.replace(marker_head, head_inject + marker_head, 1)
 
-    # 2) навигация към картоните + vintage ред, точно след отварянето на .wrap
-    nav_links = "\n".join(
-        f'<a href="cards/{tk}-{var}.html">{tk} · {var}</a>'
-        for tk in TICKERS for var in VARIANTS
-    )
+    # 2) навигация към картоните (ред на тикер, с бара и консенсуса) + vintage ред
+    cards = face_cards()
+    rows = []
+    for tk in sorted({t for t, _ in cards}):
+        vs = [v for t, v in cards if t == tk]
+        links = " ".join(f'<a href="cards/{tk}-{v}.html">{tk} · {v}</a>' for v in vs)
+        labs = []
+        for v in vs:
+            lab = card_label(tk, v)[1]
+            if lab not in labs:
+                labs.append(lab)
+        rows.append(f'<nav class="vsnav">{links}<span class="vslab">{" | ".join(labs)}</span></nav>')
     nav_inject = (
-        '\n<nav class="vsnav">\n'
-        '<span class="vslab">Картони:</span>\n'
-        f"{nav_links}\n"
-        "</nav>\n"
+        '\n<div class="vsnav"><span class="vslab">Картони:</span></div>\n'
+        + "\n".join(rows) + "\n"
         f'<div class="vsnote">нелистнат уред · vintage {VINTAGE} · '
-        "обновява се с месечния препис</div>\n"
+        "обновява се с месечния препис · всяка карта носи своя бар и консенсус</div>\n"
     )
     marker_wrap = '<body><div class="wrap">'
     assert html.count(marker_wrap) == 1, "очаквах точно един .wrap маркер в SCREEN html"
@@ -198,13 +304,60 @@ def build_index():
     write_bytes(os.path.join(OUT, "index.html"), html)
 
 
+def face_lag():
+    """Къде лицето (вече записаното в OUT) изостава от органа."""
+    lag = []
+    idx = os.path.join(OUT, "index.html")
+    m = re.search(r"vintage (\d{4}-\d{2})", read_text(idx)) if os.path.exists(idx) else None
+    face_v = m.group(1) if m else "няма"
+    if face_v != VINTAGE:
+        lag.append(f"скрийн: на лицето е {face_v}, най-новият в органа е {VINTAGE}")
+    want_names = set()
+    for tk, var in face_cards():
+        want = card_label(tk, var)[0]
+        want_names.add(f"{tk}-{var}.html")
+        p = os.path.join(CARDS_OUT, f"{tk}-{var}.html")
+        if not os.path.exists(p):
+            lag.append(f"{tk}-{var}: липсва на лицето (в органа е на бар {want})")
+            continue
+        m = re.search(r'name="vorgan-card" content="[^"]* bar=([^"]+)"', read_text(p))
+        got = m.group(1) if m else "без маркер"
+        if got != want:
+            lag.append(f"{tk}-{var}: на лицето е бар {got}, в органа {want}")
+    if os.path.isdir(CARDS_OUT):
+        for f in sorted(os.listdir(CARDS_OUT)):
+            if f.endswith(".html") and f not in want_names:
+                lag.append(f"{f[:-5]}: на лицето е, а в органа вече я няма")
+    return lag
+
+
 def main():
+    """Предпазителят (ПНЛ6) върви преди всеки запис.
+    `--check` само сверява лицето с органа и не пише нищо."""
+    for stream in (sys.stdout, sys.stderr):
+        stream.reconfigure(encoding="utf-8")  # кирилицата в конзола cp1252
+    probs = pair_problems(TICKERS)
+    if "--check" in sys.argv[1:]:
+        lag = face_lag()
+        for line in probs:
+            print("[РАЗМИНАВАНЕ]", line)
+        for line in lag:
+            print("[ИЗОСТАВА]", line)
+        if probs or lag:
+            raise SystemExit(1)
+        print(f"publish.py --check OK: лицето е в синхрон (скрийн {VINTAGE}, "
+              f"{len(face_cards())} карти)")
+        return
+    if probs:
+        for line in probs:
+            print("[ОТКАЗ]", line, file=sys.stderr)
+        raise SystemExit("[ОТКАЗ] карта на различен бар от BASE; нищо не е записано")
     os.makedirs(CARDS_OUT, exist_ok=True)
     build_index()
     build_cards()
     # .nojekyll (празен)
     write_bytes(os.path.join(OUT, ".nojekyll"), "")
-    print("publish.py OK ->", OUT)
+    print("publish.py OK ->", OUT, f"(скрийн {VINTAGE}, {len(face_cards())} карти, от {SRC})")
 
 
 if __name__ == "__main__":

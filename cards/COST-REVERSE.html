@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="vorgan-card" content="COST-REVERSE bar=2026-09-30">
+<title>COST · REVERSE — обърнатата сметка (Р6)</title>
+<style>
+:root{
+  --bg:#f9f9f7; --surface:#ffffff; --ink:#111111; --ink2:#444444; --muted:#8a8a85;
+  --grid:#e2e1da; --line:#cfcec6; --accent:#2a6fc4; --codebg:#f0efec; --quote:#f3f2ee;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0d0d0d; --surface:#161615; --ink:#f2f2f0; --ink2:#c9c8c1; --muted:#8a8a85;
+  --grid:#2b2b28; --line:#3a3a36; --accent:#6ba6ea; --codebg:#232320; --quote:#1b1b19;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.62 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:20px 22px 72px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 20px;
+  padding-bottom:12px;border-bottom:1px solid var(--grid)}
+.nav a{text-decoration:none;border:1px solid var(--grid);background:var(--surface);
+  color:var(--ink2);border-radius:8px;padding:5px 12px;font-size:13px}
+.nav a:hover{border-color:var(--ink2);color:var(--ink)}
+.nav .sep{flex:1}
+.card h1{font-size:22px;line-height:1.28;margin:.3em 0 .55em}
+.card h2{font-size:18px;margin:1.7em 0 .5em;padding-bottom:.22em;
+  border-bottom:1px solid var(--grid)}
+.card h3{font-size:15px;margin:1.3em 0 .4em;color:var(--ink2)}
+.card p{margin:.65em 0}
+.card a{color:var(--accent)}
+.card strong{color:var(--ink)}
+.card code{background:var(--codebg);border-radius:4px;padding:.1em .35em;
+  font:12.5px/1.4 ui-monospace,"Cascadia Code",Consolas,monospace;word-break:break-all}
+.card blockquote{margin:.9em 0;padding:.5em 14px;background:var(--quote);
+  border-left:3px solid var(--line);color:var(--ink2);border-radius:0 6px 6px 0}
+.card blockquote p{margin:.35em 0}
+.card ul,.card ol{padding-left:1.35em;margin:.65em 0}
+.card li{margin:.28em 0}
+.card hr{border:0;border-top:1px solid var(--grid);margin:1.9em 0}
+.tablewrap{overflow-x:auto;margin:1.05em 0;border:1px solid var(--grid);
+  border-radius:7px;-webkit-overflow-scrolling:touch}
+.tablewrap table{border-collapse:collapse;width:100%;min-width:480px;font-size:13.5px}
+.tablewrap th,.tablewrap td{border-bottom:1px solid var(--grid);
+  border-right:1px solid var(--grid);padding:6px 11px;text-align:left;vertical-align:top}
+.tablewrap tr>*:last-child{border-right:0}
+.tablewrap tbody tr:last-child>*{border-bottom:0}
+.tablewrap th{background:var(--surface);font-weight:600;color:var(--ink2);
+  white-space:nowrap}
+.tablewrap tbody tr:nth-child(even) td{background:rgba(128,128,128,.045)}
+.foot{margin-top:34px;padding-top:12px;border-top:1px solid var(--grid);
+  color:var(--muted);font-size:11.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav">
+<a href="../index.html">&larr; Скрийн</a>
+<a href="COST-BASE.html">COST · BASE</a>
+<span class="sep"></span>
+<span style="color:var(--muted);font-size:12px">COST · REVERSE · бар 2026-09-30 · конс. 2026-09</span>
+</nav>
+<article class="card">
+<p>ВЪТРЕШЕН СЛОЙ — числа + provenance; не се разпространява (Р6).
+СТАТУТ: генериран от vorgan.reverse (М-V2). Присъдата и ръчните текстове чакат Ц./Fable.</p>
+<h1>COST (Costco) — обърнатата сметка (REVERSE, vintage 2026-09)</h1>
+<blockquote>
+<p>Уредът отговаря „какво ТРЯБВА да е вярно, за да струва днешната цена“ — НИКОГА точкова цена. Всички матрици са условни сметки (ако X и Y → аритметично следва Z), не прогнози (O4). Присъдата е ръчна: виж полето най-долу.</p>
+</blockquote>
+<h2>Входове</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Вход</th>
+<th>Стойност</th>
+<th>Provenance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Цена</td>
+<td>$910.34</td>
+<td>px_cost_daily, бар 2026-09-30 (COST-BASE)</td>
+</tr>
+<tr>
+<td>Хоризонт</td>
+<td>2.919 г (2026-09-30 → 2029-08-31, край на FY2029)</td>
+<td>дни/365,25 от датите (не хардкод)</td>
+</tr>
+<tr>
+<td>DPS (тек., плоско)</td>
+<td>$5.20 (div yield 0.6%)</td>
+<td>COST-BASE div_ttm $2.307B / shares 443,478,804</td>
+</tr>
+<tr>
+<td>EPS trailing (синт.)</td>
+<td>$19.93 (≈, не diluted WASO)</td>
+<td>COST-BASE §2</td>
+</tr>
+<tr>
+<td>P/E trailing</td>
+<td>45.7×</td>
+<td>COST-BASE §1</td>
+</tr>
+<tr>
+<td>EPS консенсус FY2029 (FY3)</td>
+<td>27.28 (26.80–28.18; n=9)</td>
+<td>Koyfin препис 2026-09 (М-V3): <code>consensus/normalized/2026-09.json</code> ← <code>consensus/raw/2026-09-koyfin-transcript.md</code> (sha256 2076581e85ca…)</td>
+</tr>
+<tr>
+<td>Собствена 6г P/E медиана (RAW)</td>
+<td>44.0× (p25 38.8 · p75 51.0)</td>
+<td>COST-BASE §3</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Форма 1 — имплицитно изходно кратно</h2>
+<p>Изисквана крайна стойност за 8%–10%/г: $910.34 × (1+r)^2.919 = $1,139.60 … $1,202.29.
+Събрани дивиденти за 2.92 г (плоско DPS×h, без реинвестиране): ≈ $15.18. → Изисквана изходна ЦЕНА: $1,124.42 – $1,187.11.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>EPS сценарий (FY2029)</th>
+<th>Имплицитно изходно P/E за 8%–10%/г</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Консенсус 27.28</td>
+<td>41.2× – 43.5×</td>
+</tr>
+<tr>
+<td>Low 26.80</td>
+<td>42.0× – 44.3×</td>
+</tr>
+<tr>
+<td>High 28.18</td>
+<td>39.9× – 42.1×</td>
+</tr>
+<tr>
+<td>На кантара (method/kantar/COST.json): цена за операциите 891.89-894.35 (цена − неоперативни 27.79 + скрит дълг 9.34-11.81); FY2029 по кантара 27.65 (консенсус − мост -0.37)</td>
+<td>39.8×-42.0× (скрит дълг долна граница) · 39.9×-42.2× (горна)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Форма 2 — матрица на имплицитния годишен резултат</h2>
+<p>Годишен ТОТАЛ = ценови CAGR + плосък дивидент 0.6% (v1 приближение), хоризонт 2.919 г:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>EPS FY2029 ↓ / изходно P/E →</th>
+<th>20× (ос на метода)</th>
+<th>30×</th>
+<th>39.9× (днешното fwd)</th>
+<th>44× (6г RAW медиана)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Консенсус 27.28</td>
+<td>-15.5%</td>
+<td>-3.0%</td>
+<td>+6.9%</td>
+<td>+10.5%</td>
+</tr>
+<tr>
+<td>−22% haircut → 22.36 [S McKinsey]</td>
+<td>-21.0%</td>
+<td>-9.4%</td>
+<td>-0.1%</td>
+<td>+3.3%</td>
+</tr>
+<tr>
+<td>Low 26.80</td>
+<td>-16.0%</td>
+<td>-3.6%</td>
+<td>+6.2%</td>
+<td>+9.8%</td>
+</tr>
+<tr>
+<td>High 28.18</td>
+<td>-14.6%</td>
+<td>-1.9%</td>
+<td>+8.1%</td>
+<td>+11.7%</td>
+</tr>
+</tbody>
+</table></div>
+<h2>А2 — имплицитен FCF растеж (reverse-DCF, Rappaport/Mauboussin)</h2>
+<p>При дисконт r и EV = $390.441B, FCF_ttm котва = $8.806B, 10-годишен растеж g + Гордън терминал g_term = 2.5% (<strong>РАБОТНА КОНВЕНЦИЯ v1</strong>, етикет), реша g числово:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>r (изискуема)</th>
+<th>Имплицитен FCF растеж g (10г)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8%</td>
+<td>13.6%</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>18.6%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Sanity: g расте с r (по-скъп дисконт иска повече растеж, за да оправдае същото EV); имплицитният g е от порядъка на консенсусната Sales пътека (виж „какво трябва да е вярно“). Груб уред v1 — теминалът е конвенция, не оценка.</p>
+</blockquote>
+<h2>А3 — имплицитен CAP (residual income; груб уред v1)</h2>
+<p>MVA = mktcap − IC; IC = equity+debt−cash = $20.233B; MVA = $383.484B. RI = op_income×(1−21% работен данък, етикет „груб“) − r×IC. Имплицитен CAP = MVA/RI години:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>r</th>
+<th>RI</th>
+<th>Имплицитен CAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8%</td>
+<td>$7.249B</td>
+<td>52.9 г</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>$6.844B</td>
+<td>56.0 г</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Етикет „груб уред v1“: без данъчна корекция per година, без goodwill-корекция.</p>
+</blockquote>
+<h2>Какво трябва да е вярно (имплицитният залог)</h2>
+<ul>
+<li><strong>Консенсусната EPS YoY пътека</strong> (FY2027, FY2028, FY2029): +10.6% → +9.8% → +9.1%.</li>
+<li><strong>Консенсусната Sales YoY пътека</strong>: +8.4% → +7.4% → +7.0%.</li>
+<li><strong>Имплицитен EPS CAGR</strong> trailing (синт. 19.93) → FY2029 консенсус 27.28: <strong>11.4%/г</strong> за 2.92 г (уговорка TTM→FY; adjusted↔GAAP база — виж уговорките).</li>
+<li><strong>Имплицитен Sales CAGR</strong> FY0 (≈303.16B, импл. от FY1 YoY) → FY2029 (377.57B) за 3 фиск. г: <strong>7.6%/г</strong>.</li>
+<li><strong>[Interface B: Mauboussin кохорти — ръчен]</strong> — база-ставка ред (SPEC §3): попълва се ръчно от „The Base Rate Book“ (кохорти ръст × размер × хоризонт). Ако името е ИЗВЪН всяка кохорта, „няма прецедентна кохорта“ Е самата базова ставка.</li>
+</ul>
+<h2>Falsifier-и</h2>
+<p><em>[решение на Ц. 01.10.2026]</em></p>
+<ol>
+<li><strong>Ревизионен:</strong> ревизии надолу на консенсуса за печалбата поне две тримесечия поред.</li>
+</ol>
+<h2>Уговорки</h2>
+<p><em>[предложение, чака Ц.]</em></p>
+<ul>
+<li><strong>Цената:</strong> 910,34 е затварянето на 30.09.2026 от архива на цените.</li>
+<li><strong>История срещу консенсус (ИМП1, 01.10.2026):</strong> коригираната печалба на акция е растяла 15,0% годишно за 9 г., 12,7% за 5 г. и 13,2% за 3 г. (плато); консенсусът чака 9,4% годишно от FY2027 до FY2029 (22,79 → 27,28), тоест по-бавно от историята.</li>
+<li>Годината на Costco свършва в неделята около края на август; хоризонтът е до 31.08.2029, края на FY2029 по Koyfin.</li>
+<li>10-K за FY2026 (до 30.08.2026) не е подаден: BASE стъпва на SEC панела до тримесечието до 10.05.2026, тоест полетата trailing (EPS синт. 19,93, P/E 45,7×) са с едно тримесечие назад.</li>
+<li>Консенсусната база за FY2026 е 20,61: GAAP 20,76 минус 0,15 от върнатите мита в Q4 (прессъобщението от 24.09.2026). Компенсациите в акции са разход.</li>
+<li>FY2029 има 9 оценки за EPS и 12 за Sales.</li>
+<li>Стъпка 3: цена / 20 = 45,52 срещу 27,28 за FY2029, цената живее отвъд третата година.</li>
+<li>Стълбицата на Форма 2 (20/30/39,9/44,0×) е предложение: 39,9× е днешното fwd върху FY2027 (910,34 / 22,79), 44,0× е собствената 6г медиана.</li>
+<li><em>(М-V3 етикет)</em> Costco не публикува коригирана EPS; базата на консенсуса за FY2026 е GAAP без еднократната полза от митата (сверка (в)). Компенсациите в акции са разход и в двете.</li>
+<li><em>(М-V3 етикет)</em> Koyfin показва и втори набор кратни (Actuals and Consensus): P/E 40,6 / 37,0 / 33,9; преписани са тези от Estimates Trends.</li>
+<li><em>(М-V3 етикет)</em> FY2029 има 9 оценки за EPS и 12 за Sales.</li>
+</ul>
+<h2>Присъда</h2>
+<p><strong>Присъда на Ц. (01.10.2026): „Цената иска статукво“.</strong> Изходният коефициент (41,2-43,5 пъти печалбата за FY2029 при 8-10% годишно) е на нивото на днешния (39,9) и на собствената средна за 6 години (44,0): премията трябва да остане. Консенсусът чака по-бавен растеж (9,4% годишно) от постигнатия (13-15%).</p>
+<hr />
+<p><em>Генерирано детерминистично от vorgan.reverse (М-V2); BASE as-of 2026-09-30; консенсус vintage 2026-09 (NOT PIT назад). Р6 вътрешен.</em></p>
+</article>
+<div class="foot">Лице на оценъчния уред · нелистнат уред · тази карта: бар 2026-09-30 · конс. 2026-09 · скрийнът е vintage 2026-09 · съдържанието е дословно копие от органа.</div>
+</div>
+</body>
+</html>

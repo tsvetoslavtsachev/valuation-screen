@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="vorgan-card" content="WMT-REVERSE bar=2026-09-30">
+<title>WMT · REVERSE — обърнатата сметка (Р6)</title>
+<style>
+:root{
+  --bg:#f9f9f7; --surface:#ffffff; --ink:#111111; --ink2:#444444; --muted:#8a8a85;
+  --grid:#e2e1da; --line:#cfcec6; --accent:#2a6fc4; --codebg:#f0efec; --quote:#f3f2ee;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0d0d0d; --surface:#161615; --ink:#f2f2f0; --ink2:#c9c8c1; --muted:#8a8a85;
+  --grid:#2b2b28; --line:#3a3a36; --accent:#6ba6ea; --codebg:#232320; --quote:#1b1b19;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.62 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:20px 22px 72px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 20px;
+  padding-bottom:12px;border-bottom:1px solid var(--grid)}
+.nav a{text-decoration:none;border:1px solid var(--grid);background:var(--surface);
+  color:var(--ink2);border-radius:8px;padding:5px 12px;font-size:13px}
+.nav a:hover{border-color:var(--ink2);color:var(--ink)}
+.nav .sep{flex:1}
+.card h1{font-size:22px;line-height:1.28;margin:.3em 0 .55em}
+.card h2{font-size:18px;margin:1.7em 0 .5em;padding-bottom:.22em;
+  border-bottom:1px solid var(--grid)}
+.card h3{font-size:15px;margin:1.3em 0 .4em;color:var(--ink2)}
+.card p{margin:.65em 0}
+.card a{color:var(--accent)}
+.card strong{color:var(--ink)}
+.card code{background:var(--codebg);border-radius:4px;padding:.1em .35em;
+  font:12.5px/1.4 ui-monospace,"Cascadia Code",Consolas,monospace;word-break:break-all}
+.card blockquote{margin:.9em 0;padding:.5em 14px;background:var(--quote);
+  border-left:3px solid var(--line);color:var(--ink2);border-radius:0 6px 6px 0}
+.card blockquote p{margin:.35em 0}
+.card ul,.card ol{padding-left:1.35em;margin:.65em 0}
+.card li{margin:.28em 0}
+.card hr{border:0;border-top:1px solid var(--grid);margin:1.9em 0}
+.tablewrap{overflow-x:auto;margin:1.05em 0;border:1px solid var(--grid);
+  border-radius:7px;-webkit-overflow-scrolling:touch}
+.tablewrap table{border-collapse:collapse;width:100%;min-width:480px;font-size:13.5px}
+.tablewrap th,.tablewrap td{border-bottom:1px solid var(--grid);
+  border-right:1px solid var(--grid);padding:6px 11px;text-align:left;vertical-align:top}
+.tablewrap tr>*:last-child{border-right:0}
+.tablewrap tbody tr:last-child>*{border-bottom:0}
+.tablewrap th{background:var(--surface);font-weight:600;color:var(--ink2);
+  white-space:nowrap}
+.tablewrap tbody tr:nth-child(even) td{background:rgba(128,128,128,.045)}
+.foot{margin-top:34px;padding-top:12px;border-top:1px solid var(--grid);
+  color:var(--muted);font-size:11.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav">
+<a href="../index.html">&larr; Скрийн</a>
+<a href="WMT-BASE.html">WMT · BASE</a>
+<a href="WMT-METHOD.html">WMT · METHOD</a>
+<span class="sep"></span>
+<span style="color:var(--muted);font-size:12px">WMT · REVERSE · бар 2026-09-30 · конс. 2026-09</span>
+</nav>
+<article class="card">
+<p>ВЪТРЕШЕН СЛОЙ — числа + provenance; не се разпространява (Р6).
+СТАТУТ: генериран от vorgan.reverse (М-V2). Присъдата и ръчните текстове чакат Ц./Fable.</p>
+<h1>WMT (Walmart) — обърнатата сметка (REVERSE, vintage 2026-09)</h1>
+<blockquote>
+<p>Уредът отговаря „какво ТРЯБВА да е вярно, за да струва днешната цена“ — НИКОГА точкова цена. Всички матрици са условни сметки (ако X и Y → аритметично следва Z), не прогнози (O4). Присъдата е ръчна: виж полето най-долу.</p>
+</blockquote>
+<h2>Входове</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Вход</th>
+<th>Стойност</th>
+<th>Provenance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Цена</td>
+<td>$103.92</td>
+<td>px_wmt_daily, бар 2026-09-30 (WMT-BASE)</td>
+</tr>
+<tr>
+<td>Хоризонт</td>
+<td>2.338 г (2026-09-30 → 2029-01-31, край на FY2029)</td>
+<td>дни/365,25 от датите (не хардкод)</td>
+</tr>
+<tr>
+<td>DPS (тек., плоско)</td>
+<td>$0.97 (div yield 0.9%)</td>
+<td>WMT-BASE div_ttm $7.697B / shares 7,933,746,241</td>
+</tr>
+<tr>
+<td>EPS trailing (синт.)</td>
+<td>$2.78 (≈, не diluted WASO)</td>
+<td>WMT-BASE §2</td>
+</tr>
+<tr>
+<td>P/E trailing</td>
+<td>37.3×</td>
+<td>WMT-BASE §1</td>
+</tr>
+<tr>
+<td>EPS консенсус FY2029 (FY3)</td>
+<td>3.63 (3.37–4.03; n=23)</td>
+<td>Koyfin препис 2026-09 (М-V3): <code>consensus/normalized/2026-09.json</code> ← <code>consensus/raw/2026-09-koyfin-transcript.md</code> (sha256 2076581e85ca…)</td>
+</tr>
+<tr>
+<td>Собствена 6г P/E медиана (RAW)</td>
+<td>35.5× (p25 28.6 · p75 40.3)</td>
+<td>WMT-BASE §3</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Форма 1 — имплицитно изходно кратно</h2>
+<p>Изисквана крайна стойност за 8%–10%/г: $103.92 × (1+r)^2.338 = $124.41 … $129.86.
+Събрани дивиденти за 2.34 г (плоско DPS×h, без реинвестиране): ≈ $2.27. → Изисквана изходна ЦЕНА: $122.14 – $127.59.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>EPS сценарий (FY2029)</th>
+<th>Имплицитно изходно P/E за 8%–10%/г</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Консенсус 3.63</td>
+<td>33.6× – 35.1×</td>
+</tr>
+<tr>
+<td>Low 3.37</td>
+<td>36.2× – 37.9×</td>
+</tr>
+<tr>
+<td>High 4.03</td>
+<td>30.3× – 31.7×</td>
+</tr>
+<tr>
+<td>На кантара (method/kantar/WMT.json): цена за операциите 112.69-113.03 (цена − неоперативни -4.96 + скрит дълг 3.82-4.15); FY2029 по кантара 4.02 (консенсус − мост -0.39)</td>
+<td>33.0×-34.4× (скрит дълг долна граница) · 33.1×-34.5× (горна)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Форма 2 — матрица на имплицитния годишен резултат</h2>
+<p>Годишен ТОТАЛ = ценови CAGR + плосък дивидент 0.9% (v1 приближение), хоризонт 2.338 г:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>EPS FY2029 ↓ / изходно P/E →</th>
+<th>20× (ос на метода)</th>
+<th>25×</th>
+<th>30×</th>
+<th>36× (днешното fwd)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Консенсус 3.63</td>
+<td>-13.3%</td>
+<td>-4.7%</td>
+<td>+3.0%</td>
+<td>+11.2%</td>
+</tr>
+<tr>
+<td>−22% haircut → 2.98 [S McKinsey]</td>
+<td>-20.3%</td>
+<td>-12.4%</td>
+<td>-5.4%</td>
+<td>+2.2%</td>
+</tr>
+<tr>
+<td>Low 3.37</td>
+<td>-16.0%</td>
+<td>-7.6%</td>
+<td>-0.2%</td>
+<td>+7.8%</td>
+</tr>
+<tr>
+<td>High 4.03</td>
+<td>-9.4%</td>
+<td>-0.4%</td>
+<td>+7.6%</td>
+<td>+16.3%</td>
+</tr>
+</tbody>
+</table></div>
+<h2>А2 — имплицитен FCF растеж (reverse-DCF, Rappaport/Mauboussin)</h2>
+<p>При дисконт r и EV = $852.878B, FCF_ttm котва = $13.509B, 10-годишен растеж g + Гордън терминал g_term = 2.5% (<strong>РАБОТНА КОНВЕНЦИЯ v1</strong>, етикет), реша g числово:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>r (изискуема)</th>
+<th>Имплицитен FCF растеж g (10г)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8%</td>
+<td>18.2%</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>23.4%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Sanity: g расте с r (по-скъп дисконт иска повече растеж, за да оправдае същото EV); имплицитният g е от порядъка на консенсусната Sales пътека (виж „какво трябва да е вярно“). Груб уред v1 — теминалът е конвенция, не оценка.</p>
+</blockquote>
+<h2>А3 — имплицитен CAP (residual income; груб уред v1)</h2>
+<p>MVA = mktcap − IC; IC = equity+debt−cash = $126.641B; MVA = $697.834B. RI = op_income×(1−21% работен данък, етикет „груб“) − r×IC. Имплицитен CAP = MVA/RI години:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>r</th>
+<th>RI</th>
+<th>Имплицитен CAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8%</td>
+<td>$15.370B</td>
+<td>45.4 г</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>$12.837B</td>
+<td>54.4 г</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Етикет „груб уред v1“: без данъчна корекция per година, без goodwill-корекция.</p>
+</blockquote>
+<h2>Какво трябва да е вярно (имплицитният залог)</h2>
+<ul>
+<li><strong>Консенсусната EPS YoY пътека</strong> (FY2027, FY2028, FY2029): +9.3% → +11.8% → +12.6%.</li>
+<li><strong>Консенсусната Sales YoY пътека</strong>: +6.6% → +4.4% → +4.7%.</li>
+<li><strong>Имплицитен EPS CAGR</strong> trailing (синт. 2.78) → FY2029 консенсус 3.63: <strong>12.0%/г</strong> за 2.34 г (уговорка TTM→FY; adjusted↔GAAP база — виж уговорките).</li>
+<li><strong>Имплицитен Sales CAGR</strong> FY0 (≈706.44B, импл. от FY1 YoY) → FY2029 (823.06B) за 3 фиск. г: <strong>5.2%/г</strong>.</li>
+<li><strong>[Interface B: Mauboussin кохорти — ръчен]</strong> — база-ставка ред (SPEC §3): попълва се ръчно от „The Base Rate Book“ (кохорти ръст × размер × хоризонт). Ако името е ИЗВЪН всяка кохорта, „няма прецедентна кохорта“ Е самата базова ставка.</li>
+</ul>
+<h2>Falsifier-и</h2>
+<p><em>[отложени от Ц. (01.10.2026): тезата се мисли при готов анализ с числата за промените във финансовите резултати]</em></p>
+<h2>Уговорки</h2>
+<p><em>[предложение, чака Ц.]</em></p>
+<ul>
+<li><strong>Цената:</strong> 103,92 е затварянето на 30.09.2026 от архива на цените; съвпада със затварянето, дадено от Ц.</li>
+<li><strong>История срещу консенсус (ИМП1, 01.10.2026):</strong> коригираната печалба на акция е растяла 7,6% годишно за 8 г., 7,1% за 5 г. и 8,8% за 3 г. (плато); консенсусът чака 12,1% годишно от FY2027 до FY2029 (2,89 → 3,63). Ред „Маржът“ сред falsifier-ите пази тази разлика.</li>
+<li>Хоризонтът е до 31.01.2029, края на FY2029 по Koyfin (годината на Walmart свършва на 31 януари).</li>
+<li>Консенсусът е на коригираната EPS на Walmart: без преоценките на дяловете в други компании (+2 075 млн. за FY2026, −961 млн. за 12-те месеца до юли 2026). EPS trailing в BASE (синт. 2,78) е GAAP и ги носи; коригираната за 12-те месеца е 2,81.</li>
+<li>Компенсациите в акции (3 603 млн. за FY2026) са разход и в консенсуса, тоест базата е обща с Costco и Target; без тях P/E за FY2027 е 32,0× (при данък 21%).</li>
+<li>Консенсусът за FY2027 (2,89) е над насоката на Walmart (2,80-2,87). Във второто тримесечие на FY2027 печалбата носи върнати мита, които Walmart казва, че ще вложи в цени; сумата не е дадена [Н].</li>
+<li><strong>Стъпка 3 отвъд FY2029:</strong> цена / 20 = 5,20 срещу 3,63 за FY2029; при 9%/г след FY2029 нужната печалба идва след 4,2 години, около FY2034. По кантара след третата година това е сигнал, не оценка.</li>
+<li>Изискуемата доходност 8-10% е работна лента, не калибрирана котва.</li>
+<li>Стълбицата на Форма 2 (20/25/30/36,0×) е предложение: 20 е осата на метода, 36,0× е днешното fwd върху FY2027 (103,92 / 2,89).</li>
+<li><em>(М-V3 етикет)</em> Sales на Walmart е на нетните продажби, без членския внос и другите приходи; при COST Sales е на общите приходи. EPS е „Adjusted“: коригираната EPS на Walmart маха преоценките на дяловете в други компании, съдебните и реорганизационните пера и допълнителните компенсации в акции на PhonePe; редовните компенсации в акции остават разход.</li>
+<li><em>(М-V3 етикет)</em> Koyfin показва и втори набор ръстове и кратни (Actuals and Consensus): YoY на EPS 9,33 / 11,89 / 12,55 и P/E 37,0 / 33,1 / 29,4; преписани са тези от Estimates Trends.</li>
+<li><em>(М-V3 етикет)</em> FY2029 има 23 оценки за EPS и 20 за Sales срещу 37-42 за първите две години.</li>
+</ul>
+<h2>Присъда</h2>
+<p><strong>Присъда на Ц. (01.10.2026): „Пазарът плаща премия“.</strong> Пазарът плаща премия спрямо текущите резултати и прогнозите, като рискът е тази премия да се свие. Печалбата трябва да расте по-бързо от постигнатото през последните години.</p>
+<hr />
+<p><em>Генерирано детерминистично от vorgan.reverse (М-V2); BASE as-of 2026-09-30; консенсус vintage 2026-09 (NOT PIT назад). Р6 вътрешен.</em></p>
+</article>
+<div class="foot">Лице на оценъчния уред · нелистнат уред · тази карта: бар 2026-09-30 · конс. 2026-09 · скрийнът е vintage 2026-09 · съдържанието е дословно копие от органа.</div>
+</div>
+</body>
+</html>
