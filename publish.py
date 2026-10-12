@@ -20,6 +20,7 @@ C:/Projects/companies/valuation-organ/cards/ и произвежда нелис�
 Никакви външни ресурси (CDN/http). Никакви git операции. Органът не се пипа.
 """
 
+import hashlib
 import json
 import os
 import re
@@ -122,6 +123,13 @@ def face_cards():
         if tk in METHOD_TICKERS:
             out.append((tk, "METHOD"))
     return out
+
+
+def md_print(name):
+    """Отпечатък на съдържанието на картата в органа (12 знака sha256 на .md):
+    `--check` хваща и смяна на текста при същия бар (ПНЛ6)."""
+    with open(os.path.join(SRC, f"{name}.md"), "rb") as f:
+        return hashlib.sha256(f.read().replace(b"\r\n", b"\n")).hexdigest()[:12]
 
 
 def card_label(tk, var):
@@ -241,7 +249,7 @@ def build_cards():
             '<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
             '<meta name="robots" content="noindex, nofollow">\n'
-            f'<meta name="vorgan-card" content="{name} bar={bar}">\n'
+            f'<meta name="vorgan-card" content="{name} bar={bar} md={md_print(name)}">\n'
             f"<title>{title}</title>\n"
             f"<style>\n{CARD_CSS}\n</style>\n"
             "</head>\n"
@@ -320,10 +328,15 @@ def face_lag():
         if not os.path.exists(p):
             lag.append(f"{tk}-{var}: липсва на лицето (в органа е на бар {want})")
             continue
-        m = re.search(r'name="vorgan-card" content="[^"]* bar=([^"]+)"', read_text(p))
+        text = read_text(p)
+        m = re.search(r'name="vorgan-card" content="[^"]* bar=([^" ]+)', text)
         got = m.group(1) if m else "без маркер"
         if got != want:
             lag.append(f"{tk}-{var}: на лицето е бар {got}, в органа {want}")
+            continue
+        m = re.search(r'name="vorgan-card" content="[^"]* md=([0-9a-f]+)"', text)
+        if not m or m.group(1) != md_print(f"{tk}-{var}"):
+            lag.append(f"{tk}-{var}: текстът на лицето е различен от органа (бар {want})")
     if os.path.isdir(CARDS_OUT):
         for f in sorted(os.listdir(CARDS_OUT)):
             if f.endswith(".html") and f not in want_names:
